@@ -1,0 +1,92 @@
+<div style="width:100%; margin-top:20px; margin-bottom: 5px">
+ <div class="panel panel-info">
+     <div class="panel-heading">
+         <div class="panel-title"><u>Edit Customer</u></div>
+     </div>  
+     <div class="panel-body">
+                                 
+             <form novalidate name="customerform" class="form-horizontal" role="form">                        
+                 
+                 <div class="form-group" style="margin-right: 30px">
+                     <label class="control-label col-md-4">Customer ID<span class="asteriskField">*</span> </label>
+                     <div class="controls col-md-8 ">
+                         <input class="input-md  textinput textInput form-control" x-ng-disabled="true" x-ng-model="editCustomer.customerID" placeholder="Enter Customer ID" type="text" required/>
+                     </div>
+                 </div>
+                 
+                 <div  class="form-group required" style="margin-right: 30px">
+                     <label for="id_email" class="control-label col-md-4  requiredField">Customer Name<span class="asteriskField">*</span> </label>
+                     <div class="controls col-md-8 ">
+                         <input class="input-md emailinput form-control" x-ng-model="editCustomer.customerName" name="name" placeholder="Enter Customer Name" style="margin-bottom: 10px" type="text" required/>
+                     </div>     
+                 </div>
+                 
+                 <div class="form-group required" style="margin-right: 30px">
+                     <label for="id_password1" class="control-label col-md-4  requiredField">Address<span class="asteriskField">*</span> </label>
+                     <div class="controls col-md-8 "> 
+                         <input class="input-md textinput textInput form-control" x-ng-model="editCustomer.address" name="address" placeholder="Enter Your Address" style="margin-bottom: 10px" type="text" required/>
+                     </div>
+                 </div>
+                 
+                 <div  class="form-group required" style="margin-right: 30px">
+                      <label for="id_password2" class="control-label col-md-4  requiredField"> Phone Number<span class="asteriskField">*</span> </label>
+                      <div class="controls col-md-8 ">
+                         <input class="input-md textinput textInput form-control" x-ng-model="editCustomer.phone" x-ng-maxlength="10" name="phone" placeholder=" Enter Phone Number" style="margin-bottom: 10px" type="text" required/>
+                      <span class="help-block" 
+			                x-ng-show="(customerform.phone.$error.maxlength && 
+			                         customerform.phone.$dirty)">
+			                         <label class="label label-danger">phone number should not be more than 10 digits!</label>
+			          </span>
+                     </div>
+                     
+                 </div>
+                 
+                 <div class="form-group required" style="margin-right: 30px"> 
+                     <label for="id_name" class="control-label col-md-4  requiredField"> GSTIN<span class="asteriskField">*</span> </label> 
+                     <div class="controls col-md-8 "> 
+                         <input class="input-md textinput textInput form-control" x-ng-model="editCustomer.gst" name="gst" placeholder="Enter GST" style="margin-bottom: 10px" type="text" required/>
+                     </div>
+                 </div>
+                 
+                 <div  class="form-group required" style="margin-right: 30px">
+                      <label for="id_password2" class="control-label col-md-4  requiredField"> PAN Number<span class="asteriskField">*</span> </label>
+                      <div class="controls col-md-8 ">
+                         <input class="input-md textinput textInput form-control" x-ng-model="editCustomer.panNumber" name="panNumber" placeholder=" Enter PAN Number" style="margin-bottom: 10px" type="text" required/>
+                     </div>
+                 </div>
+                 
+                 <div class="form-group required" style="margin-right: 30px">
+                      <label for="id_password2" class="control-label col-md-4  requiredField"> Customer SPOC<span class="asteriskField">*</span> </label>
+                      <div class="controls col-md-8 ">
+                         <input class="input-md textinput textInput form-control" x-ng-model="editCustomer.customerSPOC" name="customerSPOC" placeholder=" Enter Customer SPOC Name" style="margin-bottom: 10px" type="text" required/>
+                     </div>
+                 </div>
+                 
+                 <div class="form-group" style="margin-right: 30px"> <!-- State Button -->
+                     <label for="state_id" class="control-label col-md-4">State<span class="asteriskField">*</span></label>
+                     <div class="controls col-md-8 ">
+                         <select x-ng-options="state for state in states" class="form-control" x-ng-model="editCustomer.state" required></select>
+                     </div>
+                 </div>
+                 <div class="form-group" style="margin-right: 30px">
+                     <label class="control-label col-md-4  requiredField"> Start Date</label>
+                     <div class="col-md-8">
+                     	<div class="input-group" style="margin-bottom: 10px;">
+                      	<input class="form-control" x-ng-disabled="true" x-ng-model="editCustomer.startDate" name="effectiveDate" type="text" uib-datepicker-popup="{{dateformat}}" min-date="mindate" is-open="showdp" />
+					    	<span class="input-group-btn">
+					            <button type="button" class="btn btn-default" ng-click="showcalendar($event)">
+					                <i class="glyphicon glyphicon-calendar"></i>
+					            </button>
+					        </span>
+					   	</div>
+                     </div>						    
+                 </div>
+                 
+                 <div class="col-md-offset-5 controls" class="btn-group" style="margin-bottom: 10px">
+                     	<button class="btn btn-primary" x-ng-click="updateCustomer(editCustomer)">Update Customer</button>
+                 </div>
+                     
+             </form>
+     </div>
+ </div>
+</div>

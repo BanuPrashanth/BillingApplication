@@ -1,0 +1,278 @@
+<div class="container" style="width: 98%;">
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-6 text-center">
+		<div class="btn-group btn-group-justified" role="group" aria-label="...">
+		  <div class="btn-group" role="group">
+		    <button type="button" class="btn btn-default" x-ng-click="changeMode('create')"><span class="glyphicon glyphicon-plus"></span></button>
+		  </div>
+		  <div class="btn-group" role="group">
+		    <button type="button" class="btn btn-default" x-ng-click="changeMode('view')"><span class="glyphicon glyphicon-eye-open"></span></button>
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-3"></div>
+</div>
+<div class="row" x-ng-show="viewMode">
+        <div class="col-md-12" style="margin-top:20px; margin-bottom: 80px; width: 100%;">
+
+            <div class="panel panel-info panel-table">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col col-xs-6">
+                    <h2 class="panel-title">Invoice</h2>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="form-group col col-md-4">
+                       <label for="customerID" class="control-label col-md-4">Customer ID<span class="asteriskField">*</span> </label>
+                       <div  class="controls col-md-6 " style="margin-bottom: 30px">
+                           <select x-ng-change="loadCustomerName()" x-ng-options="customer.customerID as customer.customerID for customer in customers" class="form-control " x-ng-model="invoice.customerID" required></select>
+                       </div>
+                  </div>
+                  <div class="form-group col col-md-4">
+                  		<label for="customerName" class="control-label col-md-4">Customer Name<span class="asteriskField">*</span> </label>
+                       <div  class="controls col-md-6 " style="margin-bottom: 30px;">
+                           <select x-ng-change="loadCustomerID()" x-ng-options="customer.customerName as customer.customerName for customer in customers" class="form-control " x-ng-model="invoice.customerName" required></select>
+                       </div>
+                  </div>
+                  <div class="form-group col col-md-4 text-center" style="margin-bottom: 30px;">
+                  		<button class="btn btn-primary" x-ng-click="fetchInvoice()"><span class="glyphicon glyphicon-search"></span>Search</button>
+                  </div>
+                </div>
+                <div class="row">
+				  <div class="col-sm-2">
+				    <div class="input-group">
+				      <span class="input-group-addon">
+				        <input type="checkbox" x-ng-model="simple">
+				      </span>
+				      <label class="form-control text-center">Simple</label>
+				    </div><!-- /input-group -->
+				  </div><!-- /.col-sm-2 -->
+				</div><!-- /.row -->
+              </div>
+              <div class="panel-body">
+              <div x-ng-show="isSearch">
+	              <table class="table table-striped table-bordered table-list">
+	                  <thead>
+	                    <tr>
+	                        <th class="text-center">S.No.</th>
+	                        <th class="text-center" >Invoice Id</th>
+	                        <th class="text-center" >Invoice Date</th>
+	                        <th class="text-center" >Gross Amount</th>
+	                        <th class="text-center" ><span class="glyphicon glyphicon-open" aria-hidden="true"></span></th>
+	                        <th class="text-center" ><span class="glyphicon glyphicon-download" aria-hidden="true"></span></th>
+	                    </tr> 
+	                  </thead>
+	                  <tbody>
+	                          <tr x-ng-repeat="invoice in invoices">
+		                          <td><label class="control-label col-md-12 text-center">{{invoice.sno}}</label></td>
+		                          <td><label class="control-label col-md-12 text-center">{{invoice.invoiceID}}</label></td>
+		                          <td><label class="control-label col-md-12 text-center">{{invoice.invoiceDate}}</label></td>
+		                          <td><label class="control-label col-md-12 text-center">{{invoice.netAmount}}</label></td>
+		                          <td>
+		                          	<div class="control-label col-md-12 text-center">
+		                          		<button class="btn btn-primary" x-ng-click="fetchInvoiceNotes($index)">view</button>
+		                          	</div>
+		                          </td>
+		                          <td>
+		                          	<div class="control-label col-md-12 text-center">
+		                          		<button class="btn btn-primary" x-ng-click="downloadInvoiceNotes($index)">download</button>
+		                          	</div>
+		                          </td>
+	                          </tr>
+	                        </tbody>
+	                </table>
+                </div>
+                <div x-ng-show="isView">
+	                <table class="table table-striped table-bordered table-list">
+	                  <thead>
+	                    <tr>
+	                        <th class="hidden-xs">S.No.</th>
+	                        <th class="text-center">D.C. ID</th>
+	                        <th class="text-center">Product ID</th>
+	                        <th class="text-center">Particulars</th>
+	                        <th class="text-center">HSN Number</th>
+	                        <th class="text-center">Notation</th>
+	                        <th class="text-center">Quantity</th>
+	                        <th class="text-center">Rate</th>
+	                        <th class="text-center">Discount</th>
+	                        <th class="text-center">Net Total</th>
+	                        <!--  <th><em class="fa fa-cog"></em></th>-->
+	                    </tr> 
+	                  </thead>
+	                  <tbody>
+		                  <tr x-ng-repeat="note in invoiceNotes">
+	                          <td class="hidden-xs text-center">{{note.sno}}</td>
+			                  <td><label class="control-label col-md-12 text-center">{{note.deliveryNoteID}}</label></td>
+	                          <td><label class="control-label col-md-12 text-center">{{note.productID}}</label></td>
+	                          <td><label class="control-label col-md-12 text-center">{{note.productDescription}}</label></td>
+	                          <td><label class="control-label col-md-12 text-center">{{note.hsnNumber}}</label></td>
+	                          <td><label class="control-label col-md-12 text-center">{{note.notation}}</label></td>
+	                          <td><label class="control-label col-md-12 text-center">{{note.quantity}}</label></td>
+	                          <td><label class="control-label col-md-12 text-center">{{note.rate}}</label></td>
+	                          <td><label class="control-label col-md-12 text-center">{{note.discount}}</label></td>
+	                          <td><label class="control-label col-md-12 text-center">{{note.netTotal}}</label></td>
+	                        
+	                          <!--<td align="center">
+	                             <button class="btn btn-danger" x-ng-click="deleteNote($index)" aria-label="Remove">X</em></button>
+	                          </td>  -->
+	                      </tr>
+                     </tbody>
+                </table>
+            	</div>
+              </div>
+              <hr>
+            </div>
+
+			</div> <!-- panel end -->
+		</div>
+	
+
+<div class="row" x-ng-show="createMode">
+<div class="col-md-12" style="margin-top:20px; margin-bottom: 80px; width: 100%;">
+	<div class="panel panel-info panel-table">
+	
+	    <div class="panel-heading">
+		    <div class="row">
+	                  <div class="col col-xs-12">
+	                    <h1 class="panel-title">{{heading}}</h1>
+	                  </div>
+	                  
+	         </div>
+	         <hr>
+		    <div class="row" style="margin-bottom: 30px">
+			<div class="col col-xs-6">
+	             <div class="form-group required">
+	                 <label class="control-label col-md-4">Invoice Date</label>
+	                 <div class="controls col-md-8 ">
+	                     <input class="input-md  textinput textInput form-control" x-ng-disabled="isSaved" x-ng-change="generateInvoiceID()" x-ng-model="invoice.invoiceDate" name="deliveryDate" type="Date" />
+	                 </div>
+	             </div>
+	        </div>
+			<div class="col col-xs-6">
+	             <div class="form-group">
+	                 <label class="control-label col-md-2">Invoice Id</label>
+	                 <label class="control-label col-md-10 text-left">{{invoice.invoiceID}}</label>
+	             </div>
+	        </div>
+	        
+		</div>
+		<div class="row">
+			<div class="form-group col col-xs-3">
+	             <label class="control-label col-md-4">Customer ID<span class="asteriskField">*</span> </label>
+	             <div  class="controls col-md-6 " style="margin-bottom: 30px">
+	                 <select x-ng-change="loadCustomerName()" x-ng-disabled="isSaved" x-ng-options="customer.customerID as customer.customerID for customer in customers" class="form-control " x-ng-model="invoice.customerID" required></select>
+	             </div>
+	        </div>
+	        <div class="form-group col col-xs-3">
+	        		<label for="customerName" class="control-label col-md-4">Customer Name<span class="asteriskField">*</span> </label>
+	             <div  class="controls col-md-6 " style="margin-bottom: 30px">
+	                 <select x-ng-change="loadCustomerID()" x-ng-disabled="isSaved" x-ng-options="customer.customerName as customer.customerName for customer in customers" class="form-control " x-ng-model="invoice.customerName" required></select>
+	             </div>
+	        </div>
+			<div class="col col-xs-3">
+	        <div class="form-group required">
+	            <label for="deliveryDate" class="control-label col-md-4">From Date</label>
+	            <div class="controls col-md-8 ">
+	                <input class="input-md  textinput textInput form-control" x-ng-disabled="isSaved" x-ng-model="invoice.fromDate" name="deliveryDate" style="margin-bottom: 10px" type="Date" />
+	            </div>
+	        </div>
+	      </div>
+			<div class="col col-xs-3">
+	              <div class="form-group required">
+	                  <label for="deliveryDate" class="control-label col-md-4">To Date</label>
+	                  <div class="controls col-md-8 ">
+	                      <input class="input-md  textinput textInput form-control" x-ng-disabled="isSaved" x-ng-model="invoice.toDate" name="deliveryDate" style="margin-bottom: 10px" type="Date" />
+	                  </div>
+	              </div>
+	       </div>
+		</div>
+		<div class="row">
+		  <div class="col-sm-2">
+		    <div class="input-group">
+		      <span class="input-group-addon">
+		        <input type="checkbox" x-ng-disabled="isSaved" x-ng-change="generateInvoiceID()" x-ng-model="simple">
+		      </span>
+		      <label class="form-control text-center">Simple</label>
+		    </div><!-- /input-group -->
+		  </div><!-- /.col-sm-2 -->
+		</div><!-- /.row -->
+		<div class="row">
+			<div class="col-md-12 text-center"><button type="button" class="btn btn-primary" x-ng-click="generateInvoice()" >Generate</button></div>
+		</div>
+		</div><!-- Panel Heading -->
+		<div class="panel-body">
+				<table class="table table-striped table-bordered table-list">
+	                  <thead>
+	                    <tr>
+	                        <th class="hidden-xs">S.No.</th>
+	                        <th class="text-center">D.C. ID</th>
+	                        <th class="text-center">Product ID</th>
+	                        <th class="text-center">Particulars</th>
+	                        <th class="text-center">HSN Number</th>
+	                        <th class="text-center">Notation</th>
+	                        <th class="text-center">Quantity</th>
+	                        <th class="text-center">Rate</th>
+	                        <th class="text-center">Discount</th>
+	                        <th class="text-center">Net Total</th>
+	                        <!--  <th><em class="fa fa-cog"></em></th>-->
+	                    </tr> 
+	                  </thead>
+	                  <tbody>
+		                  <tr x-ng-repeat="note in invoice.notes">
+	                          <td class="hidden-xs">{{note.sno}}</td>
+			                  <td><label class="control-label col-md-12">{{note.deliveryNoteID}}</label></td>
+	                          <td><label class="control-label col-md-12">{{note.productID}}</label></td>
+	                          <td><label class="control-label col-md-12">{{note.productDescription}}</label></td>
+	                          <td><label class="control-label col-md-12">{{note.hsnNumber}}</label></td>
+	                          <td><label class="control-label col-md-12">{{note.notation}}</label></td>
+	                          <td><label class="control-label col-md-12">{{note.quantity}}</label></td>
+	                          <td><label class="control-label col-md-12">{{note.rate}}</label></td>
+	                          <td><label class="control-label col-md-12">{{note.discount}}</label></td>
+	                          <td><label class="control-label col-md-12">{{note.netTotal | number: 2}}</label></td>
+	                        
+	                          <!--<td align="center">
+	                             <button class="btn btn-danger" x-ng-click="deleteNote($index)" aria-label="Remove">X</em></button>
+	                          </td>  -->
+	                      </tr>
+                     </tbody>
+                </table>
+		</div>
+		<div class="panel-footer">
+				<div class="row">
+					<div class="col-md-10 text-right"><label>Gross Amount :</label></div>
+					<div class="col-md-1 text-left"><label>{{invoice.grossAmount | number: 2}}</label></div>
+				</div>
+				<div x-ng-hide="simple" class="row">
+					<div class="col-md-10 text-right"><label>CGST :</label></div>
+					<div class="col-md-1 text-left"><label>{{invoice.cgstAmount | number: 2}}</label></div>
+				</div>
+				<div x-ng-hide="simple" class="row">
+					<div class="col-md-10 text-right"><label>SGST :</label></div>
+					<div class="col-md-1 text-left"><label>{{invoice.sgstAmount | number: 2}}</label></div>
+				</div>
+				<div x-ng-hide="simple" class="row">
+					<div class="col-md-10 text-right"><label>Total GST :</label></div>
+					<div class="col-md-1 text-left"><label>{{invoice.gstAmount | number: 2}}</label></div>
+				</div>
+				<div x-ng-hide="simple" class="row">
+					<div class="col-md-10 text-right"><label>Net Amount :</label></div>
+					<div class="col-md-1 text-left"><label>{{invoice.netAmount | number: 2}}</label></div>
+				</div>
+                <div class="row" style="margin-bottom: 30px">
+                  <div class="col col-xs-6 text-right">
+                  		<button type="button" class="btn btn-primary" x-ng-disabled="isSaved" x-ng-click="saveInvoice()">Save</button>
+                  </div>
+                  <div class="col col-xs-6">
+                    <div class="col col-xs-6">
+                    	<button class="btn btn-success" x-ng-disabled="!isSaved" x-ng-click="downloadInvoice()">Download</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+	    </div><!-- Panel -->
+	    </div>
+    </div><!-- row -->
+</div><!-- Container -->

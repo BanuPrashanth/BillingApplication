@@ -1,0 +1,190 @@
+<div class="container" style="width: 98%;">
+<div class="row" >
+	<div class="panel panel-info panel-table" style="margin-bottom: 80px;">
+	
+	    <div class="panel-heading">
+		    <div class="row">
+	                  <div class="col col-xs-12">
+	                    <h1 class="panel-title">Receipt</h1>
+	                  </div>
+	                  
+	         </div>
+	         <hr>
+	         
+		    <div class="row" style="margin-bottom: 10px">
+			
+			<div class="form-group col col-xs-3">
+	             <div class="form-group">
+	                 <label class="control-label col-md-4 text-right">Receipt Id</label>
+	                 <div class="controls col-md-8 text-left ">
+	                     <input class="input-md  textinput textInput form-control" x-ng-disabled="true" x-ng-model="receipt.receiptID"  type="text" />
+	                 </div>
+	             </div>
+	        </div>
+	        <div class="form-group col col-xs-3">
+	             <div class="form-group">
+	                 <label class="control-label col-md-5 text-right">Receipt Date</label>
+	                 <div class="controls col-md-7 text-left">
+	                     <input class="input-md  textinput textInput form-control" x-ng-disabled="" x-ng-change="" x-ng-model="receipt.receiptDate" type="Date" />
+	                 </div>
+	             </div>
+	        </div>
+	        <div class="form-group col col-xs-3">
+	             <label class="control-label col-md-4">Customer ID<span class="asteriskField">*</span> </label>
+	             <div  class="controls col-md-6 " style="margin-bottom: 30px">
+	                 <select x-ng-change="loadCustomerName()" x-ng-disabled="isSaved" x-ng-options="customer.customerID as customer.customerID for customer in customers" class="form-control " x-ng-model="receipt.customerID" required></select>
+	             </div>
+	        </div>
+	        <div class="form-group col col-xs-3">
+	        		<label for="customerName" class="control-label col-md-4">Customer Name<span class="asteriskField">*</span> </label>
+	             <div  class="controls col-md-6 " style="margin-bottom: 30px;width:60%">
+	                 <select x-ng-change="loadCustomerID()" x-ng-disabled="isSaved" x-ng-options="customer.customerName as customer.customerName for customer in customers" class="form-control " x-ng-model="receipt.customerName" required></select>
+	             </div>
+	        </div>
+		</div>
+		<div class="row">
+		  <div class="col-sm-2">
+		    <div class="input-group">
+		      <span class="input-group-addon">
+		        <input type="checkbox" x-ng-change="generateReceiptID()" x-ng-model="simple">
+		      </span>
+		      <label class="form-control text-center">Simple</label>
+		    </div><!-- /input-group -->
+		  </div><!-- /.col-sm-2 -->
+		</div><!-- /.row -->
+		</div><!-- Panel Heading -->
+		<div class="panel-body">
+		<div class="row" style="margin-bottom: 10px">
+             <div class="form-group">
+                 <label class="control-label col-md-2">Opening Balance : </label>
+                 <div class="controls col-md-4 text-left ">
+                 	 <label class="control-label col-md-12 text-center">{{receipt.openingBalance | number:2}}</label>
+                 </div>
+             </div>
+		</div>
+		<div class="row" style="margin-bottom: 10px">
+             <div class="form-group">
+                 <label class="control-label col-md-2">Opening Advance Amount : </label>
+                 <div class="controls col-md-4 text-left ">
+                 	 <label class="control-label col-md-12 text-center">{{receipt.openingAdvanceAmount | number:2}}</label>
+                 </div>
+             </div>
+		</div>
+		<div class="row" style="margin-bottom: 10px">
+             <div class="form-group">
+                 <label class="control-label col-md-2">Amount To Be Paid : </label>
+                 <div class="controls col-md-4 text-left ">
+                 	 <label class="control-label col-md-12 text-center">{{(receipt.openingBalance - receipt.openingAdvanceAmount) | number:2}}</label>
+                 </div>
+             </div>
+		</div>
+		<div class="row" style="margin-bottom: 10px">
+             <div class="form-group">
+                 <label class="control-label col-md-2">Transaction Type : </label>
+                 <div class="controls col-md-4 text-left ">
+                 <select x-ng-model="receipt.transactionType" class="form-control">
+                     <option value="Card Payment">Card Payment</option>
+                     <option value="Net Banking">Net Banking</option>
+                     <option value="Cash">Cash</option>
+                     <option value="Cheque">Cheque</option>
+                 </select>
+                 </div>
+             </div>
+		</div>
+		<div class="row" style="margin-bottom: 10px">
+             <div class="form-group">
+                 <label class="control-label col-md-2">Comments : </label>
+                 <div class="controls col-md-4 text-left ">
+                 	<textarea class="form-control" rows="5" x-ng-disabled="false" x-ng-model="receipt.comment"></textarea>
+                 </div>
+             </div>
+		</div>
+		<div class="row" style="margin-bottom: 10px">
+             <div class="form-group">
+                 <label class="control-label col-md-2">Closing Balance : </label>
+                 <div class="controls col-md-4 text-left ">
+                 	 <label class="control-label col-md-12 text-center">{{receipt.closingBalance | number:2}}</label>
+                 </div>
+             </div>
+		</div>
+		<div class="row" style="margin-bottom: 10px">
+             <div class="form-group">
+                 <label class="control-label col-md-2">Closing Advance Amount : </label>
+                 <div class="controls col-md-4 text-left ">
+                 	 <label class="control-label col-md-12 text-center">{{receipt.closingAdvanceAmount | number:2}}</label>
+                 </div>
+             </div>
+		</div>
+		<div class="row" style="margin-bottom: 10px" x-ng-if="!(error | isEmpty)">
+			<div class="alert alert-danger col-sm-6" >{{error}}</div>
+		</div>
+		<div class="row" style="margin-bottom: 10px">
+             <div class="form-group">
+                 <label class="control-label col-md-2">Total Amount Paid : </label>
+                 <div class="controls col-md-4 text-left ">
+                 	 <input class="input-md  textinput textInput form-control" x-ng-change="checkNegativeVal(receipt.totalAmtPaid)" x-ng-model="receipt.totalAmtPaid" type="text" />
+                 </div>
+             </div>
+		</div>
+		<div class="row" style="margin-bottom: 10px">
+		<div class="col col-xs-4 text-right">
+                  <button type="button" class="btn btn-primary" x-ng-disabled="isSaved || !enableCalculate || (receipt.totalAmtPaid | isEmpty)" x-ng-click="calTotalAmtPaid()">Calculate</button>
+             </div>
+		</div>
+				<table class="table table-striped table-bordered table-list">
+	                  <thead>
+	                    <tr>
+	                        <th class="hidden-xs">S.No.</th>
+	                        <th class="text-center">Invoice ID</th>
+	                        <th class="text-center">Invoice Date</th>
+	                        <th class="text-center">Actual Invoice Amount</th>
+	                        <th class="text-center">Previous Balance</th>
+	                        <th class="text-center">Invoice Amount Paid</th>
+	                        <th class="text-center">Current Balance</th>
+	                        <!--  <th><em class="fa fa-cog"></em></th>-->
+	                    </tr> 
+	                  </thead>
+	                  <tbody>
+		                  <tr x-ng-repeat="invoice in receipt.invoices">
+	                          <td class="hidden-xs text-center">{{invoice.sno}}</td>
+			                  <td><label class="control-label col-md-12 text-center">{{invoice.invoiceID}}</label></td>
+	                          <td><label class="control-label col-md-12 text-center">{{invoice.invoiceDate | date:'fullDate'}}</label></td>
+	                          <td><label class="control-label col-md-12 text-center">{{invoice.netAmount | number: 2}}</label></td>
+	                          <td><label class="control-label col-md-12 text-center">{{invoice.previousBalance | number: 2}}</label></td>
+	                          <td><label class="control-label col-md-12 text-center">{{invoice.invoiceAmtPaid | number: 2}}</label></td>
+	                          <td><label class="control-label col-md-12 text-center">{{invoice.currentBalance | number: 2}}</label></td>
+	                          
+	                        
+	                          <!--<td align="center">
+	                             <button class="btn btn-danger" x-ng-click="deleteNote($index)" aria-label="Remove">X</em></button>
+	                          </td>  -->
+	                      </tr>
+                     </tbody>
+                </table>
+		</div>
+		<div class="panel-footer">
+				<div class="row">
+					<div class="col-md-10 text-right"><label>Cleared Amount :</label></div>
+					<div class="col-md-1 text-left"><label>{{receipt.clearAmount | number: 2}}</label></div>
+				</div>
+                <div class="row" style="margin-bottom: 30px;margin-top: 20px;">
+                  <div class="col col-md-4 text-right">
+                  	<button type="button" class="btn btn-primary" x-ng-disabled="isSaved || isSaveDisabled" x-ng-click="saveReceipt()">Save</button>
+                  </div>
+                  <div class="col col-md-4 text-center">
+                    <button class="btn btn-success" x-ng-disabled="!isSaved" x-ng-click="downloadReceipt()">Download</button>
+                  </div>
+                  <div class="col col-md-4 text-left">
+                    <button class="btn btn-danger" x-ng-click="resetReceipt()">Reset</button>
+                  </div>
+              </div>
+            </div>
+	    </div><!-- Panel -->
+    </div><!-- row -->
+</div><!-- Container -->
+	
+
+
+
+
+

@@ -1,0 +1,34 @@
+<div class="col-md-12" style="margin-top:5px; margin-bottom: 80px; width: 100%;">
+<div class="panel panel-info panel-table">
+	
+	    <div class="panel-heading">
+		    <div class="row">
+	                  <div class="col col-md-12">
+	                    <h1 class="panel-title" border="2">Products</h1>
+	                  </div>
+	         </div>
+		</div><!-- Panel Heading end-->
+		<div class="panel-body">
+				<table data-ng-table="tableParams" class="table table-condensed table-bordered table-striped" data-show-filter="true">
+					
+		                  <tr x-ng-repeat="prod in $data">
+		                  	  <td title="'S. No.'">{{$index+1}}</td>
+	                          <td title="'Product ID'" data-filter="{ productID : 'text'}" data-sortable="'productID'">{{prod.productID}}</td>
+	                          <td title="'Particulars'" data-filter="{ productDescription : 'text'}" data-sortable="'productDescription'">{{prod.productDescription}}</td>
+	                          <td title="'HSN Number'" data-filter="{ otherProductCode : 'text'}" data-sortable="'otherProductCode'">{{prod.otherProductCode}}</td>
+	                          <td title="'GST'" data-filter="{ gst : 'number'}" data-sortable="'gst'">{{prod.gst}}</td>
+	                          <td title="'Price'" data-filter="{ rate : 'number'}" data-sortable="'rate'">{{prod.rate}}</td>
+	                          <td title="'Product Type'" data-filter="{ productType : 'text'}" data-sortable="'productType'">{{prod.productType}}</td>
+	                          <td title="'Status'" data-filter="{ status : 'text'}" data-sortable="'status'">{{prod.status}}</td>
+	                          <td title="'Effective Date'" data-filter="{ effectiveDate : 'text'}" data-sortable="'effectiveDate'">{{prod.effectiveDate}}</td>
+	                          <td title="'Edit'">
+	                             <button class="btn btn-primary" x-ng-click="openEditProductForm(prod)"><span class="glyphicon glyphicon-edit"></span></button>
+	                          </td>
+	                          <td title="'Delete'">
+	                             <button class="btn btn-danger" x-ng-click="deleteProduct(prod.productID)"><span class="glyphicon glyphicon-trash"></span></button>
+	                          </td>
+	                      </tr>
+                </table>
+		</div><!-- Panel body end-->
+	    </div><!-- Panel end-->
+</div>

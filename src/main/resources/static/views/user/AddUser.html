@@ -1,0 +1,97 @@
+<div style="margin-top:10px; margin-bottom: 10px; margin-right: 20px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title"><u>Create User</u></div>
+            </div>  
+            <div class="panel-body">
+                                        
+                    <form novalidate name="userform" class="form-horizontal" role="form">                        
+                        
+                        <div class="form-group required" style="margin-right: 30px">
+                            <label for="id_username" class="control-label col-md-4  requiredField">User ID<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 ">
+                                <input class="input-md  textinput textInput form-control" x-ng-model="user.userID" name="id" placeholder="Enter User ID" style="margin-bottom: 10px" type="text" required/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group required" style="margin-right: 30px">
+                            <label for="id_email" class="control-label col-md-4  requiredField">User Name<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 ">
+                                <input class="input-md emailinput form-control" x-ng-model="user.userName" name="name" placeholder="Enter User Name" style="margin-bottom: 10px" type="text" required/>
+                            </div>     
+                        </div>
+                        
+                        <div class="form-group required" style="margin-right: 30px">
+                            <label for="id_password1" class="control-label col-md-4  requiredField">Password<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 "> 
+                                <input class="input-md textinput textInput form-control" id="password" x-ng-model="user.password" name="password" placeholder="Enter Password" style="margin-bottom: 10px" type="password" x-ng-required/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group required" style="margin-right: 30px">
+                            <label for="id_password1" class="control-label col-md-4  requiredField">Re Enter Password<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 "> 
+                                <input class="form-control" pw-check='password' id="rePassword" x-ng-model="rePassword" name="rePassword" placeholder="Re Enter Password" style="margin-bottom: 10px" type="password" x-ng-required/>
+								<div class='help-block' x-ng-show='userform.$error && userform.rePassword.$dirty'>
+								  <label class="label label-danger" x-ng-show='userform.rePassword.$error.pwmatch'>
+								    Passwords don't match.
+								  </label>
+								</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group required" style="margin-right: 30px">
+                             <label class="control-label col-md-4  requiredField"> Address<span class="asteriskField">*</span> </label>
+                             <div class="controls col-md-8 ">
+                                <input class="input-md textinput textInput form-control" x-ng-model="user.address" name="hsnNumber" placeholder="Enter Address" style="margin-bottom: 10px" type="text" required/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group required" style="margin-right: 30px"> 
+                            <label class="control-label col-md-4  requiredField"> Phone Number<span class="asteriskField">*</span> </label> 
+                            <div class="controls col-md-8 "> 
+                                <input class="input-md textinput textInput form-control" x-ng-model="user.phone" name="phone" x-ng-maxlength="10" placeholder="Enter Phone Number" style="margin-bottom: 10px" type="text" required/>
+	                            <span class="help-block" 
+					                  x-ng-show="(userform.phone.$error.maxlength && 
+					                           userform.phone.$dirty)">
+					                           <label class="label label-danger">phone number should not be more than 10 digits!</label>
+					            </span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-right: 30px">
+                            <label class="control-label col-md-4">User Type</label>
+                            <div class="controls col-md-8 " style="margin-bottom: 10px">
+                                <select x-ng-model="user.userType" class="form-control" x-ng-options="userType for userType in userTypes"></select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-right: 30px">
+                            <label class="control-label col-md-4">Status</label>
+                            <div class="controls col-md-8 " style="margin-bottom: 10px">
+                                <select x-ng-model="user.status" class="form-control" x-ng-options="status for status in userStatus"></select>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-right: 30px">
+                            <label class="control-label col-md-4"> Create Date</label>
+                            <div class="col-md-8">
+                            	<div class="input-group" style="margin-bottom: 20px;">
+	                            	<input class="form-control" x-ng-disabled="true" x-ng-model="user.createDate" name="effectiveDate" type="text" uib-datepicker-popup="{{dateformat}}" min-date="mindate" is-open="showdp" />
+							    	<span class="input-group-btn">
+							            <button type="button" class="btn btn-default" ng-click="showcalendar($event)">
+							                <i class="glyphicon glyphicon-calendar"></i>
+							            </button>
+							        </span>
+						    	</div>
+                            </div>						    
+                        </div>
+                        
+                        <div class="col-md-offset-4 controls" class="btn-group">
+                            	<button x-ng-disabled="userform.$invalid" class="btn btn-primary" x-ng-click="addUser(user,rePassword)">Add User</button>
+                            	<button class="btn btn-danger" x-ng-click="reset(userform)">Reset</button>
+                        </div>
+                            
+                    </form>
+            </div>
+        </div>
+    </div> 

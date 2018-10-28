@@ -1,0 +1,35 @@
+<div class="col-md-12" style="margin-top:50px; margin-bottom: 80px; width: 100%;">
+<div class="panel panel-info panel-table">
+	
+	    <div class="panel-heading">
+		    <div class="row">
+	                  <div class="col col-md-12">
+	                    <h1 class="panel-title" border="2">Users</h1>
+	                  </div>
+	         </div>
+		</div><!-- Panel Heading -->
+		<div class="panel-body">
+			<table data-ng-table="tableParams" class="table table-condensed table-bordered table-striped" data-show-filter="true">
+						
+                  <tr x-ng-repeat="user in $data">
+                  	  <td title="'S. No.'">{{$index+1}}</td>
+                         <td title="'User ID'" data-filter="{ userID : 'text'}" data-sortable="'userID'">{{user.userID}}</td>
+                         <td title="'User Name'" data-filter="{ userName : 'text'}" data-sortable="'userName'">{{user.userName}}</td>
+                         <td title="'Address'" data-filter="{ address : 'text'}" data-sortable="'address'">{{user.address}}</td>
+                         <td title="'Phone'" data-filter="{ phone : 'number'}" data-sortable="'phone'">{{user.phone}}</td>
+                         <td title="'Status'" data-filter="{ status : 'text'}" data-sortable="'status'">{{user.status}}</td>
+                         <td title="'User Type'" data-filter="{ userType : 'text'}" data-sortable="'userType'">{{user.userType}}</td>
+                         <td title="'Create Date'" data-filter="{ createDate : 'text'}" data-sortable="'createDate'">{{user.createDate | date : 'short'}}</td>
+                         <td title="'Edit'">
+                            <button class="btn btn-primary" x-ng-click="openEditUserForm(user)"><span class="glyphicon glyphicon-edit"></span></button>
+                         </td>
+                         <td title="'Delete'">
+                            <button class="btn btn-danger" x-ng-click="deleteUser(user.userID)"><span class="glyphicon glyphicon-trash"></span></button>
+                         </td>
+                     </tr>
+	                     <!-- </tbody>  -->
+	       </table>
+		</div>
+	    </div><!-- Panel -->
+</div>
+	    

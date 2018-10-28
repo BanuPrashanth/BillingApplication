@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 5.2.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OrderNote" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" isIgnorePagination="true" uuid="fc5b3751-19e1-4246-9617-4edc1e20c6a3">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BiliingAdapter"/>
+	<property name="net.sf.jasperreports.components.table.generate.pdf.tags" value="true"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="DNStaticDS" uuid="0080e996-2e27-4d2d-a52f-b2639195213a">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BiliingAdapter"/>
+		<parameter name="STR_DELIVERY_NOTE_ID" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[select cust.CUSTOMER_NAME,
+cust.ADDRESS,
+cust.GST,
+cust.PHONE_NUMBER,
+cust.STATE,
+dc.DELIVERY_NOTE_ID,
+DATE_FORMAT(dc.DELIVERY_DATE, '%d-%b-%Y') as DELIVERY_DATE,
+dc.GRAND_TOTAL
+from CUSTOMER_TBL cust,DELIVERY_NOTE_TBL dc
+where cust.CUSTOMER_ID=dc.CUSTOMER_ID
+and dc.DELIVERY_NOTE_ID=$P{STR_DELIVERY_NOTE_ID}]]>
+		</queryString>
+		<field name="CUSTOMER_NAME" class="java.lang.String"/>
+		<field name="ADDRESS" class="java.lang.String"/>
+		<field name="GST" class="java.lang.String"/>
+		<field name="PHONE_NUMBER" class="java.lang.String"/>
+		<field name="STATE" class="java.lang.String"/>
+		<field name="DELIVERY_NOTE_ID" class="java.lang.String"/>
+		<field name="DELIVERY_DATE" class="java.lang.String"/>
+		<field name="GRAND_TOTAL" class="java.lang.Float"/>
+	</subDataset>
+	<subDataset name="DNDynDS" uuid="5dc6df3c-4013-49db-a9e6-adec253a26ef">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BiliingAdapter"/>
+		<parameter name="STR_DELIVERY_NOTE_ID" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[select @s:=@s+1 serial_no,
+prod.PROD_ID,
+prod.PROD_DESC,
+note.NOTATION,
+note.QUANTITY,
+note.RATE,
+note.TOTAL,
+note.DISCOUNT,
+note.NET_TOTAL,
+note.TAX_1,
+note.TAX_1_AMT,
+note.TAX_2,
+note.TAX_2_AMT,
+note.NET_AMOUNT
+from   (select @s:=0) as s,PRODUCT_TBL prod,NOTE_TBL note, DELIVERY_NOTE_TBL dc
+where prod.PROD_ID=note.PRODUCT_ID
+and note.DELIVERY_NOTE_ID=dc.DELIVERY_NOTE_ID
+and dc.DELIVERY_NOTE_ID=$P{STR_DELIVERY_NOTE_ID}]]>
+		</queryString>
+		<field name="serial_no" class="java.lang.Integer"/>
+		<field name="PROD_ID" class="java.lang.String"/>
+		<field name="PROD_DESC" class="java.lang.String"/>
+		<field name="NOTATION" class="java.lang.String"/>
+		<field name="QUANTITY" class="java.lang.Integer"/>
+		<field name="RATE" class="java.lang.Integer"/>
+		<field name="TOTAL" class="java.lang.Float"/>
+		<field name="DISCOUNT" class="java.lang.Integer"/>
+		<field name="NET_TOTAL" class="java.lang.Float"/>
+		<field name="TAX_1" class="java.lang.Integer"/>
+		<field name="TAX_1_AMT" class="java.lang.Float"/>
+		<field name="TAX_2" class="java.lang.Integer"/>
+		<field name="TAX_2_AMT" class="java.lang.Float"/>
+		<field name="NET_AMOUNT" class="java.lang.Float"/>
+	</subDataset>
+	<parameter name="DELIVERY_NOTE_ID" class="java.lang.String"/>
+	<parameter name="NET_AMOUNT_IN_WORDS" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT billing_db.`COMPANY_TBL`.`COMPANY_NAME`,
+	billing_db.`COMPANY_TBL`.`ADDRESS`,
+	billing_db.`COMPANY_TBL`.`GSTIN`,
+	billing_db.`COMPANY_TBL`.`MOBILE`,
+	billing_db.`COMPANY_TBL`.`PRIMARY_PHONE`,
+	billing_db.`COMPANY_TBL`.`SECONDARY_PHONE`,
+	billing_db.`COMPANY_TBL`.`EMAIL`,
+	billing_db.`COMPANY_TBL`.`STATE`,
+	billing_db.`COMPANY_TBL`.`BANK_NAME`,
+	billing_db.`COMPANY_TBL`.`ACCOUNT_NO`,
+	billing_db.`COMPANY_TBL`.`IFSC`,
+	billing_db.`COMPANY_TBL`.`BRANCH`
+FROM billing_db.`COMPANY_TBL`]]>
+	</queryString>
+	<field name="COMPANY_NAME" class="java.lang.String"/>
+	<field name="ADDRESS" class="java.lang.String"/>
+	<field name="GSTIN" class="java.lang.String"/>
+	<field name="MOBILE" class="java.lang.String"/>
+	<field name="PRIMARY_PHONE" class="java.lang.String"/>
+	<field name="SECONDARY_PHONE" class="java.lang.String"/>
+	<field name="EMAIL" class="java.lang.String"/>
+	<field name="STATE" class="java.lang.String"/>
+	<field name="BANK_NAME" class="java.lang.String"/>
+	<field name="ACCOUNT_NO" class="java.lang.String"/>
+	<field name="IFSC" class="java.lang.String"/>
+	<field name="BRANCH" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="379" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-10" y="-10" width="570" height="120" forecolor="#000000" backcolor="#FFFFFF" uuid="227ef1ad-05bd-4af5-9d17-e402680da721"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textField>
+					<reportElement x="153" y="13" width="270" height="25" uuid="9506228d-288a-4425-9d55-2273b373c742"/>
+					<textElement>
+						<font fontName="Times New Roman" size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{COMPANY_NAME}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="157" y="37" width="275" height="44" uuid="b6bff95a-f536-4467-8d64-df38bdddf34d"/>
+					<textFieldExpression><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="213" y="61" width="75" height="20" uuid="462f477c-ae0f-4837-9c58-093c1615c494"/>
+					<textFieldExpression><![CDATA[$F{MOBILE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="166" y="61" width="44" height="20" uuid="db520945-ea90-4e3b-be4c-a6c1e7382eb6"/>
+					<text><![CDATA[Mobile - ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="289" y="61" width="41" height="20" uuid="e2003997-c095-4ab6-a9e3-9dd86b45505e"/>
+					<text><![CDATA[Phone - ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="331" y="61" width="100" height="20" uuid="6de1b52f-d68e-497e-8987-6df7b5690c70"/>
+					<textFieldExpression><![CDATA[$F{PRIMARY_PHONE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="201" y="71" width="36" height="19" uuid="2fb582eb-a7fe-4fde-aa47-5fa748e39dc7"/>
+					<text><![CDATA[Email - ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="242" y="71" width="160" height="19" uuid="fc3a2a71-d78c-41ee-a895-cefed8dbc966"/>
+					<textFieldExpression><![CDATA[$F{EMAIL}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="251" y="101" width="73" height="19" uuid="33f5875b-b38c-4531-90c2-60fbbf8ded72"/>
+					<box>
+						<pen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Order Form]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="224" y="88" width="41" height="17" uuid="fb2de6a4-ca38-410f-9796-7b261f8110a6"/>
+					<text><![CDATA[GSTIN -]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="266" y="88" width="161" height="14" uuid="527f3bd2-6c90-43c9-ac7d-859101802b2c"/>
+					<textFieldExpression><![CDATA[$F{GSTIN}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="-10" y="110" width="280" height="110" uuid="89231765-94a9-4b52-b8f7-dee24257645a"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<staticText>
+					<reportElement x="11" y="12" width="29" height="30" uuid="2300ff82-fbd0-4d33-b37c-4741e097a337"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[To -]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement x="51" y="13" width="219" height="97" uuid="1acaf127-6c51-4112-8eae-cd802c69d8cc"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="DNStaticDS" uuid="f7a2060d-390e-4b87-9059-c40d263d8729">
+							<datasetParameter name="STR_DELIVERY_NOTE_ID">
+								<datasetParameterExpression><![CDATA[$P{DELIVERY_NOTE_ID}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:listContents height="97" width="219">
+							<textField>
+								<reportElement x="0" y="0" width="219" height="20" uuid="638737ba-c09d-4744-9919-8de657f61dcf"/>
+								<textElement>
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CUSTOMER_NAME}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="20" width="219" height="30" uuid="accee5f4-9c7f-4b11-8c5c-cf63897c85db"/>
+								<textElement>
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="50" width="219" height="20" uuid="12f7bf2e-48bc-4f39-bae1-300156a0ff53"/>
+								<textElement>
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PHONE_NUMBER}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="70" width="219" height="20" uuid="8b237010-fb19-458f-af02-0fb09e2605b7"/>
+								<textElement>
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{STATE}]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+			</frame>
+			<frame>
+				<reportElement x="270" y="110" width="290" height="110" uuid="93f095e6-7d1c-43b3-8419-b3343238154e"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<staticText>
+					<reportElement x="12" y="14" width="89" height="19" uuid="73da6141-0c24-46bb-9c9d-103bd0716741"/>
+					<textElement textAlignment="Left">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Order Ref. No. -]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="43" width="89" height="20" uuid="d0d69c2f-874d-4d3b-aa4a-633d126d077e"/>
+					<textElement textAlignment="Left">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Order Date -]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement x="101" y="14" width="165" height="76" uuid="1e779302-d1de-4d78-9229-a2d0d1789d2b"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="DNStaticDS" uuid="b09e5b4e-0905-47d5-9af2-aaff216cbd5d">
+							<datasetParameter name="STR_DELIVERY_NOTE_ID">
+								<datasetParameterExpression><![CDATA[$P{DELIVERY_NOTE_ID}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:listContents height="76" width="165">
+							<textField>
+								<reportElement x="0" y="0" width="160" height="30" uuid="39a00c8a-ee37-4232-a656-02125a018b33"/>
+								<textElement>
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DELIVERY_NOTE_ID}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="30" width="160" height="30" uuid="05f30c29-0d52-449a-b079-bd9fb0a691bd"/>
+								<textElement>
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DELIVERY_DATE}]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+			</frame>
+			<componentElement>
+				<reportElement x="-10" y="220" width="570" height="150" uuid="d590e50d-9b44-47bc-9dc8-31ab5015ebbf">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.components.autoresize.next" value="true"/>
+					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="DNDynDS" uuid="b79534c8-cff6-47a9-b91f-c880fe046814">
+						<datasetParameter name="STR_DELIVERY_NOTE_ID">
+							<datasetParameterExpression><![CDATA[$P{DELIVERY_NOTE_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="114" uuid="2ed83dc9-0873-463b-8ee4-207f87745289">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="114" height="30" uuid="af4e3f30-6dd0-4432-81fa-8f7e85479bf2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" isBold="true"/>
+								</textElement>
+								<text><![CDATA[S No.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="114" height="30" uuid="320f2754-d9c0-494f-823c-bed78e3a531a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{serial_no}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="114" uuid="cd25ebde-13d3-405a-b6be-432988d4f261">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="114" height="30" uuid="e89dad97-fdcf-4aa0-a35f-6291f79b4040"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Particulars]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="114" height="30" uuid="bac60ed4-677f-48ac-bcf1-d0474eabeb29"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PROD_DESC}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="114" uuid="80d1f2d8-15d7-4d93-9b0b-16a2daa65306">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="114" height="30" uuid="b073e9e1-f6d3-430c-ab6a-69119e5b57ad"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Quantity]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="114" height="30" uuid="6551771f-bb91-4ebd-9aa2-a8c1eb3efcbd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{QUANTITY}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="114" uuid="26113d56-af7a-4145-8618-a190673130a3">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="114" height="30" uuid="b3ec1d4a-1535-4b02-be71-23edaa820915"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Notation]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="114" height="30" uuid="9fcd01ef-b472-4176-9236-4c263cf62fa4"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{NOTATION}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="114" uuid="214f8cf0-8bf0-46fe-926b-c2e71403661c">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="114" height="30" uuid="a2cf913a-cba7-4f8a-b8e1-20bba256a04a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Net Amount]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="114" height="30" uuid="fc2d1818-eece-4ce5-8ccb-cf526faa88e2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{NET_AMOUNT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="36" splitType="Stretch">
+			<frame>
+				<reportElement x="-10" y="0" width="570" height="30" uuid="38ab6d1f-2035-472d-ac0a-c9697b0d2bfa"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<staticText>
+					<reportElement x="12" y="8" width="100" height="19" uuid="3692ad7b-c053-44e4-a013-f6494b97fa53"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Amount in words : ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="112" y="8" width="298" height="19" uuid="d0a5a57b-7c3f-40bb-8799-3587ca4624dd"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{NET_AMOUNT_IN_WORDS}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="422" y="9" width="88" height="20" uuid="dcece1f2-31d1-4702-97e7-8c4433be908e"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Net Value - ]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement x="511" y="9" width="52" height="19" uuid="7c11f467-6331-49f9-9388-bfd79ac96b5e"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="DNStaticDS" uuid="4fb256da-2d57-4b37-bfc7-61b54f94fabb">
+							<datasetParameter name="STR_DELIVERY_NOTE_ID">
+								<datasetParameterExpression><![CDATA[$P{DELIVERY_NOTE_ID}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:listContents height="19" width="52">
+							<textField>
+								<reportElement x="0" y="0" width="52" height="19" uuid="fb1798f4-c7be-443a-a9e5-be5181c6eda1"/>
+								<textElement>
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{GRAND_TOTAL}]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+			</frame>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="145" splitType="Stretch">
+			<frame>
+				<reportElement x="-10" y="1" width="570" height="142" uuid="3607ff0f-a53b-41c5-aa67-27c759833212"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<staticText>
+					<reportElement x="40" y="100" width="112" height="30" uuid="46d2c636-f0db-454e-a735-20f0aad404e9"/>
+					<text><![CDATA[Receiver Signatory]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="380" y="100" width="139" height="30" uuid="afff0ea5-652c-43ac-9d33-9350299b64c6"/>
+					<text><![CDATA[Authorised Signatory]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="323" y="21" width="28" height="19" uuid="b1518609-9a55-40e9-9ec3-a36ae7dc0dbc"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[for ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="352" y="21" width="193" height="30" uuid="1f4f7a31-b14c-439a-965a-70b3bcc27ff8"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{COMPANY_NAME}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+</jasperReport>

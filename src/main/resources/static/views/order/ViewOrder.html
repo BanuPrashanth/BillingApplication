@@ -1,0 +1,73 @@
+<div class="col-md-12" style="margin-top:5px; margin-bottom: 80px; width: 100%;">
+
+            <div class="panel panel-info panel-table">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col col-xs-6">
+                    <h2 class="panel-title">Order Notes</h2>
+                    <hr>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="form-group col col-md-3">
+                       <div  class="controls">
+                           <label>Customer ID<span class="asteriskField">*</span> :</label> <select x-ng-change="loadCustomerName()" x-ng-options="customer.customerID as customer.customerID for customer in customers" class="form-control " x-ng-model="deliveryNotes.customerID" required></select>
+                       </div>
+                  </div>
+                  <div class="form-group col col-md-3">
+                       <div  class="controls" >
+                           <label>Customer Name<span class="asteriskField">*</span> :</label><select x-ng-change="loadCustomerID()" x-ng-options="customer.customerName as customer.customerName for customer in customers" class="form-control " x-ng-model="deliveryNotes.customerName" required></select>
+                       </div>
+                  </div>
+                  <div class="form-group col col-md-3">
+			            <div class="controls">
+			                <label>From Date<span class="asteriskField">*</span> :</label><input class="input-md  textinput textInput form-control" x-ng-model="deliveryNotes.fromDate" name="fromDate" style="margin-bottom: 10px" type="Date" />
+			            </div>
+			      </div>
+					<div class="form-group col col-md-3">
+		                  <div class="controls">
+		                      <label>To Date<span class="asteriskField">*</span> :</label><input class="input-md  textinput textInput form-control" x-ng-model="deliveryNotes.toDate" name="toDate" style="margin-bottom: 10px" type="Date" />
+		                  </div>
+			       </div>
+                </div>
+                <div class="row" style="margin-bottom: 10px;">
+				  <div class="col-md-2">
+				    <div class="input-group">
+				      <span class="input-group-addon">
+				        <input type="checkbox" x-ng-model="simple">
+				      </span>
+				      <label class="form-control text-center">Simple</label>
+				    </div><!-- /input-group -->
+				  </div><!-- /.col-sm-2 -->
+				  <div class="col col-md-8 text-center">
+                  		<button class="btn btn-primary" x-ng-disabled="deliveryNotes.customerID | isEmpty" x-ng-click="fetchOrders()"><span class="glyphicon glyphicon-search"></span>Search</button>
+                  </div>
+				</div><!-- /.row -->
+              </div>
+              <div class="panel-body">
+              <div x-ng-show="isSearch">
+              <div class="well well-sm"><label>ORDERS</label></div>
+	              <table data-ng-table="orderTable" class="table table-condensed table-bordered table-striped" data-show-filter="true">
+                        <tr x-ng-repeat="order in $data">
+		                  	  <td title="'S. No.'">{{$index+1}}</td>
+	                          <td title="'Order ID'" data-filter="{ deliveryNoteID : 'text'}" data-sortable="'deliveryNoteID'">{{order.deliveryNoteID}}</td>
+	                          <td title="'Order Date'" data-filter="{ deliveryDate : 'text'}" data-sortable="'deliveryDate'">{{order.deliveryDate}}</td>
+	                          <td title="'Total Amount'" data-filter="{ grandTotal : 'number'}" data-sortable="'grandTotal'">{{order.grandTotal | number : 2}}</td>
+	                          <td title="'Status'" data-filter="{ status : 'text'}" data-sortable="'status'">{{order.status}}</td>
+	                          <td title="'Open'">
+	                             <button class="btn btn-primary" x-ng-disabled="'CANCELLED'==order.status" x-ng-click="fetchOrderNote($index)"><span class="glyphicon glyphicon-eye-open"></span></button>
+	                          </td>
+	                          <td title="'Cancel'">
+	                             <button class="btn btn-danger" x-ng-disabled="order.invoiceGenerated || 'CANCELLED'==order.status" x-ng-click="CancelOrder(order)"><i class="fa fa-ban" aria-hidden="true"></i></button>
+	                          </td>
+	                          <td title="'Download'">
+	                             <button class="btn btn-success" x-ng-disabled="'CANCELLED'==order.status" x-ng-click="downloadOrderNote($index)"><i class="fa fa-download" aria-hidden="true"></i></button>
+	                          </td>
+                      	</tr>
+                	</table>
+                </div><!-- search end -->
+              </div> <!-- panel body end -->
+            </div><!-- panel end -->
+
+			</div> 

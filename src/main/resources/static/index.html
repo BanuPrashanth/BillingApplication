@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="app" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" x-ng-app="productPlannerApp"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Product Planner</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- CSS Library -->
+	<link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/app.css">
+	<link rel="stylesheet" href="css/jqueryui.css">
+	<link rel="stylesheet" href="css/ngDialog.min.css">
+	<link rel="stylesheet" href="css/ngDialog-theme-default.min.css">
+	<link rel="stylesheet" href="css/ng-table.min.css">
+	
+</head>
+<body x-ng-controller="homeController as homeCtrl">
+<nav class="navbar navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#/!"><span class="glyphicon glyphicon-home"></span>&nbsp;Billing Application</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+           	 <li class="active" x-ng-show="!isLoggedIn"><a href="#!login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Login</a> </li>
+           	 <li class="active" x-ng-show="isLoggedIn" x-ng-click="homeCtrl.logout()"><a href="#!logout"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a> </li>
+           	 <li class=""> <a href="#!owner"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;About</a> </li>
+		     <li class="" x-ng-show="isLoggedIn"><a href="#!product"><i class="fa fa-product-hunt" aria-hidden="true"></i>&nbsp;Products</a> </li>
+		     <li class="" x-ng-show="isLoggedIn"><a href="#!user"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Users</a> </li>
+		     <li class="" x-ng-show="isLoggedIn"><a href="#!customer"><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Customers</a> </li>
+		     <li class="" x-ng-show="isLoggedIn"><a href="#!deliveryNote"><i class="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;Order Generation</a> </li>
+		     <li class="" x-ng-show="isLoggedIn"><a href="#!invoice"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;Invoice Generation</a> </li>
+		     <li class="" x-ng-show="isLoggedIn"><a href="#!installment"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;Installment Receipt</a> </li>
+		     <li class="" x-ng-show="isLoggedIn"> <a href="#!reports"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Reports</a> </li>
+		   </ul>
+  </div>
+</nav>
+
+<span data-us-spinner="{radius:30, width:8, length: 16}"></span>
+<div data-ng-view></div>
+  
+<!--  <div class="navbar  navbar-inverse navbar-fixed-bottom"> 
+     <div class="container">
+       <div class="navbar-text pull=left">
+	    <p> © company 2017.</p>
+	   </div>
+	      
+	 </div>
+</div>
+-->
+
+<!-- JQUERY -->
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/jqueryui.js"></script>
+
+<!-- Lodash -->
+<script type="text/javascript" src="js/lodash.js"></script>
+<!-- BOOTSTRAP-->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- ANGULARJS -->
+<script src="js/angular/angular.min.js"></script>
+<script src="js/angular/angular-resource.min.js"></script>
+<script src="js/angular/angular-route.min.js"></script>
+<script src="js/angular/spin.min.js"></script>
+<script src="js/angular/angular-spinner.min.js"></script>
+<script src="js/angular/angular-loading-spinner.js"></script>
+<script src="js/angular/angular-animate.min.js"></script>
+<script src="js/ngDialog.min.js"></script>
+<script src="js/datatable/ui-bootstrap-tpls-2.5.0.min.js"></script>
+<script src="js/datatable/ng-table.min.js"></script>
+
+<!-- Custom JavaScript Library -->
+<script src="js/app.js"></script>
+<script src="js/directives/custom-directives.js"></script>
+<script src="js/controllers/controller.js"></script>
+<script src="js/controllers/user-controller.js"></script>
+<script src="js/controllers/customer-controller.js"></script>
+<script src="js/controllers/product-controller.js"></script>
+<script src="js/controllers/order-controller.js"></script>
+<script src="js/controllers/invoice-controller.js"></script>
+<script src="js/controllers/receipt-controller.js"></script>
+<script src="js/controllers/report-controller.js"></script>
+<script src="js/service.js"></script>
+<script src="js/filters.js"></script>
+ 
+</body>
+</html>

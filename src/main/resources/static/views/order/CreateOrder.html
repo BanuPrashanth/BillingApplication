@@ -1,0 +1,130 @@
+<div class="col-md-12" style="margin-top:5px; margin-bottom: 80px; width: 100%;">
+
+          <div class="panel panel-info panel-table">
+            <div class="panel-heading">
+              <div class="row" style="margin-bottom: 10px;">
+                <div class="col col-md-6 text-left">
+                  <h2 class="panel-title">Create Order Notes</h2>
+                </div>
+                <div class="col col-md-2"></div>
+                <div class="col col-md-2 text-right">
+                  <button type="button" class="btn btn-primary" x-ng-click="addNewNote()">Create New Note</button>
+              	</div>
+                <div class="col-md-2 text-right">
+				    <div class="input-group">
+				      <span class="input-group-addon">
+				        <input x-ng-change="generateDeliveryNoteID()" type="checkbox" x-ng-model="simple">
+				      </span>
+				      <label class="form-control text-center">Simple</label>
+				    </div><!-- /input-group -->
+				</div><!-- /.col-sm-2 -->
+              </div>
+              <div class="row">
+                <div class="form-group col col-md-3">
+                    <div class="controls">
+                        <label>Order Date: </label><input class="input-md  textinput textInput form-control" x-ng-change="generateDeliveryNoteID()" x-ng-model="deliveryNotes.deliveryDate" name="deliveryDate" style="margin-bottom: 10px" type="Date" />
+                    </div>
+                </div>
+                <div class="form-group col col-md-3">
+                  	<div class="controls">
+                      <label>Order Id : </label><input x-ng-disabled="true" x-ng-model="deliveryNotes.deliveryNoteID" class="form-control" type="text"/>
+                  	</div>
+                </div>
+                <div class="form-group col col-md-3">
+                     <div  class="controls">
+                         <label>Customer ID: <span class="asteriskField">*</span></label><select x-ng-change="loadCustomerName()" x-ng-options="customer.customerID as customer.customerID for customer in customers" class="form-control " x-ng-model="deliveryNotes.customerID"></select>
+                     </div>
+                </div>
+                <div class="form-group col col-md-3">
+                     <div  class="controls">
+                         <label>Customer Name: <span class="asteriskField">*</span> </label><select x-ng-change="loadCustomerID()" x-ng-options="customer.customerName as customer.customerName for customer in customers" class="form-control " x-ng-model="deliveryNotes.customerName"></select>
+                     </div>
+                </div>
+                
+              </div>
+              
+            </div>
+            <div class="panel-body">
+            
+               <div id="container">
+            <table data-ng-table="noteTable" class="table table-condensed table-bordered table-striped" data-show-filter="false">
+				<thead>
+                    <tr>
+                        <th class="hidden-xs text-center">S.No.</th>
+                        <th class="text-center" x-ng-style="!simple && {'width':'10%'}">ProductID</th>
+                        <th class="text-center" x-ng-style="{'width':'20%'}">Particulars</th>
+                        <th class="text-center" x-ng-style="!simple && {'width':'15%'}">Notation</th>
+                        <th class="text-center" x-ng-style="!simple && {'width':'15%'}">Quantity</th>
+                        <th class="text-center" x-ng-style="!simple && {'width':'15%'}">Price</th>
+                        <th class="text-center">Total</th>
+                        <th class="text-center" x-ng-style="!simple && {'width':'15%'}">Discount</th>
+                        <th class="text-center">Net Total</th>
+                        <th x-ng-hide="simple" class="text-center" x-ng-style="!simple && {'width':'2%'}">CGST</th>
+                        <th x-ng-hide="simple" class="text-center" x-ng-style="!simple && {'width':'2%'}">CGST Amount</th>
+                        <th x-ng-hide="simple" class="text-center" x-ng-style="!simple && {'width':'2%'}">{{stateGSTType}}</th>
+                        <th x-ng-hide="simple" class="text-center" x-ng-style="!simple && {'width':'2%'}">{{stateGSTType}} Amount</th>
+                        <th x-ng-hide="simple" class="text-center">Net Price</th>
+                        <th class="text-center"><span class="glyphicon glyphicon-remove-sign"></span></th>
+                    </tr> 
+                 </thead>
+                 <tbody>
+                  <tr x-ng-repeat="note in $data">
+                  	  <td>{{$index+1}}</td>
+                         <td data-filter="{ productID : 'text'}" data-sortable="'productID'">
+                         		<div class="form-group">
+	                            <select x-ng-model="note.productID" x-ng-change="loadProductByID($index)" x-ng-options="product.productID as product.productID for product in products" class="form-control" ></select>
+                        	</div>
+                         </td>
+                         <td data-filter="{ productDescription : 'text'}" data-sortable="'productDescription'">
+	                        <div class="form-group">
+		                        <select x-ng-model="note.productDescription" x-ng-change="loadProductByDesc($index)" x-ng-options="product.productDescription as product.productDescription for product in products" class="form-control" ></select>
+	                        </div>
+                         </td>
+                         <td data-filter="{ notation : 'text'}" data-sortable="'notation'">
+                         		<div class="input-group"><input x-ng-disabled="!note.isProductSelected" x-ng-model="note.notation" class="form-control" type="text"/></div>
+                         </td>
+                         <td data-filter="{ quantity : 'number'}" data-sortable="'quantity'">
+                         		<div class="input-group"><input x-ng-disabled="!note.isProductSelected" x-ng-model="note.quantity" x-ng-change="calculateTotal($index)" class="form-control" type="number" min="0"/></div>
+                         </td>
+                         <td data-filter="{ rate : 'number'}" data-sortable="'rate'">
+                         		<div class="input-group"><input x-ng-disabled="!note.isProductSelected" x-ng-model="note.rate" x-ng-change="calculateTotal($index)" class="form-control" type="number" min="0"/></div>
+                         </td>
+                         <td data-filter="{ total : 'number'}" data-sortable="'total'">{{note.total | number : 2}}</td>
+                         <td data-filter="{ discount : 'number'}" data-sortable="'discount'">
+                         		<div class="input-group"><input x-ng-disabled="!note.isProductSelected" x-ng-model="note.discount" x-ng-change="calculateNetTotal($index)" class="form-control" type="text"/></div>
+                         </td>
+                         <td data-filter="{ netTotal : 'number'}" data-sortable="'netTotal'">{{note.netTotal | number : 2}}</td>
+                         
+                         <td x-ng-hide="simple" data-filter="{ cgst : 'number'}" data-sortable="'cgst'">
+                         		<label class="control-label col-md-12">{{note.cgst}}<span>%</span></label>
+                         </td>
+                         <td x-ng-hide="simple" data-filter="{ cgstAmount : 'number'}" data-sortable="'cgstAmount'">
+                         		<label class="control-label col-md-12">{{note.cgstAmount | number: 2}}</label>
+                         </td>
+                         <td x-ng-hide="simple" data-filter="{ sgst : 'number'}" data-sortable="'sgst'">
+                         		<label class="control-label col-md-12">{{note.sgst}}<span>%</span></label>
+                         </td>
+                         <td x-ng-hide="simple" data-filter="{ sgstAmount : 'number'}" data-sortable="'sgstAmount'">{{note.sgstAmount | number : 2}}</td>
+                         <td x-ng-hide="simple" data-filter="{ netPrice : 'number'}" data-sortable="'netPrice'"><label>{{note.netPrice | number : 2}}</label></td>
+                         <td>
+                            <button class="btn btn-danger" x-ng-click="deleteNote($index)"><span class="glyphicon glyphicon-trash"></span></button>
+                         </td>
+                     </tr>
+                </tbody> <!-- </tbody>  -->
+             </table>
+               </div>
+            </div>
+            <div class="panel-footer">
+            
+              <div class="row">
+                <div class="col col-xs-6 text-right">
+                		<button x-ng-disabled="!isRowAdded" type="button" class="btn btn-primary"  x-ng-click="saveDeliveryNotes()">Save Order</button>
+                </div>
+                <div class="col col-xs-4"></div>
+                <div class="col-md-2 text-left"><label>Grand Total : {{deliveryNotes.grandTotal | number: 2}}</label></div>
+            </div>
+          </div>
+
+	</div> <!-- panel end -->
+</div>
+

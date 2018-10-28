@@ -1,0 +1,51 @@
+<div class="panel-body">
+<div class="row">
+<div class="form-group col col-xs-3">
+   <label class="control-label col-md-4">Product ID<span class="asteriskField">*</span> </label>
+   <div  class="controls col-md-6 " style="margin-bottom: 30px">
+      <select x-ng-model="report.productID" x-ng-change="loadProductByID()" x-ng-options="product.productID as product.productID for product in products" class="form-control" ></select>
+   </div>
+</div>
+<div class="form-group col col-xs-3">
+   <label class="control-label col-md-4">Product Name<span class="asteriskField">*</span> </label>
+   <div  class="controls col-md-6 " style="margin-bottom: 30px;width:60%">
+      <select x-ng-model="report.productDescription" x-ng-change="loadProductByDesc()" x-ng-options="product.productDescription as product.productDescription for product in products" class="form-control" ></select>
+  </div>
+</div>
+</div>
+
+<table class="table table-striped table-bordered table-list">
+   <thead>
+     <tr>
+         <th class="hidden-xs">S.No.</th>
+         <th class="text-center">Date</th>
+         <th class="text-center">Customer name</th>
+         <th class="text-center">Quantity</th>
+         <th class="text-center">Amount</th>
+     </tr>
+   </thead>
+   <tbody>
+    <tr x-ng-repeat="stock in report.stocks">
+           <td class="hidden-xs text-center">{{stock.sno}}</td>
+     	   <td><label class="control-label col-md-12 text-center">{{stock.date | date:'dd-MM-yyyy'}}</label></td>
+           <td><label class="control-label col-md-12 text-center">{{stock.customerName}}</label></td>
+           <td><label class="control-label col-md-12 text-center">{{stock.quantity}}</label></td>
+           <td><label class="control-label col-md-12 text-center">{{stock.amount}}</label></td>
+       </tr>
+     </tbody>
+</table>
+</div>
+<div class="panel-footer">
+	<div class="row">
+		<div class="col-md-4">
+		</div>
+		<div class="col-md-4">
+		</div>
+		<div class="col-md-2">
+			<label>Total Quantity : {{report.totalQuantity}}</label>
+		</div>
+		<div class="col-md-2">
+			<label>Total Amount : {{report.totalAmount}}</label>
+		</div>
+	</div>
+</div>

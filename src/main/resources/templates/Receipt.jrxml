@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 5.2.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Receipt" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="50ada18f-5c10-448c-9cd5-b501cb346680">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BiliingAdapter"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="RECEIPT_DS" uuid="2faa4f8c-b99f-4a43-aaa7-a0b55323250f">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BiliingAdapter"/>
+		<parameter name="STR_RECEIPT_ID" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[select rec.RECEIPT_ID,
+DATE_FORMAT(rec.RECEIPT_DATE, '%d-%b-%Y') as RECEIPT_DATE,
+cust.CUSTOMER_NAME,
+rec.RECEIVED_AMT,
+rec.CLOSING_BAL,
+ADVANCE_AMOUNT 
+from TABLE_RECEIPT rec,
+CUSTOMER_TBL cust 
+where rec.CUSTOMER_ID=cust.CUSTOMER_ID
+and RECEIPT_ID=$P{STR_RECEIPT_ID}]]>
+		</queryString>
+		<field name="RECEIPT_ID" class="java.lang.String"/>
+		<field name="RECEIPT_DATE" class="java.lang.String"/>
+		<field name="CUSTOMER_NAME" class="java.lang.String"/>
+		<field name="RECEIVED_AMT" class="java.lang.Float"/>
+		<field name="CLOSING_BAL" class="java.lang.Float"/>
+		<field name="ADVANCE_AMOUNT" class="java.lang.Float"/>
+	</subDataset>
+	<parameter name="RECEIPT_ID" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="DUE_AMOUNT" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT billing_db.`COMPANY_TBL`.`COMPANY_NAME`,
+	billing_db.`COMPANY_TBL`.`ADDRESS`,
+	billing_db.`COMPANY_TBL`.`GSTIN`,
+	billing_db.`COMPANY_TBL`.`MOBILE`,
+	billing_db.`COMPANY_TBL`.`PRIMARY_PHONE`,
+	billing_db.`COMPANY_TBL`.`EMAIL`,
+	billing_db.`COMPANY_TBL`.`STATE`,
+	billing_db.`COMPANY_TBL`.`BANK_NAME`,
+	billing_db.`COMPANY_TBL`.`ACCOUNT_NO`,
+	billing_db.`COMPANY_TBL`.`IFSC`,
+	billing_db.`COMPANY_TBL`.`BRANCH`
+FROM billing_db.`COMPANY_TBL`]]>
+	</queryString>
+	<field name="COMPANY_NAME" class="java.lang.String"/>
+	<field name="ADDRESS" class="java.lang.String"/>
+	<field name="GSTIN" class="java.lang.String"/>
+	<field name="MOBILE" class="java.lang.String"/>
+	<field name="PRIMARY_PHONE" class="java.lang.String"/>
+	<field name="EMAIL" class="java.lang.String"/>
+	<field name="STATE" class="java.lang.String"/>
+	<field name="BANK_NAME" class="java.lang.String"/>
+	<field name="ACCOUNT_NO" class="java.lang.String"/>
+	<field name="IFSC" class="java.lang.String"/>
+	<field name="BRANCH" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="130" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-10" y="-10" width="570" height="140" forecolor="#000000" backcolor="#FFFFFF" uuid="26c4d604-f769-4f15-aeb6-1a266345ad64"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textField>
+					<reportElement x="153" y="13" width="270" height="25" uuid="6401ba82-0b40-4776-93b5-7d9b7db577c1"/>
+					<textElement>
+						<font fontName="Times New Roman" size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{COMPANY_NAME}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="157" y="37" width="275" height="44" uuid="a054d654-6a5c-4987-a4ad-1f871c76d4d1"/>
+					<textFieldExpression><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="213" y="61" width="75" height="20" uuid="e025fde5-0e88-48ab-a0e0-061bbbd7124b"/>
+					<textFieldExpression><![CDATA[$F{MOBILE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="166" y="61" width="44" height="20" uuid="bc6198cd-97e3-4137-a33d-f31b40e31f5a"/>
+					<text><![CDATA[Mobile - ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="289" y="61" width="41" height="20" uuid="9e2631b7-7525-4e5a-87c6-e09dc297c4b8"/>
+					<text><![CDATA[Phone - ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="331" y="61" width="100" height="20" uuid="f2274d99-14d3-41f1-b26e-7dec4cb610fb"/>
+					<textFieldExpression><![CDATA[$F{PRIMARY_PHONE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="201" y="71" width="36" height="19" uuid="6a512109-7c9e-4fee-8c03-3cda4c24596c"/>
+					<text><![CDATA[Email - ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="242" y="71" width="160" height="19" uuid="43e644fe-2bd6-4630-9cd7-7ef6bad42f27"/>
+					<textFieldExpression><![CDATA[$F{EMAIL}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="266" y="110" width="39" height="17" uuid="23532b28-e976-4699-b305-0e5e3da97498"/>
+					<box>
+						<pen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Receipt]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="224" y="88" width="41" height="17" uuid="a64e34e0-1a1c-47ff-8e9b-5887dba5f9ae"/>
+					<text><![CDATA[GSTIN -]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="266" y="88" width="161" height="14" uuid="8fd75e4b-2dc0-40b9-a86b-44c117483ef8"/>
+					<textFieldExpression><![CDATA[$F{GSTIN}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<detail>
+		<band height="327" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="130" width="188" height="30" uuid="9aa88bb1-d523-4721-8e2c-38b75b426c02"/>
+				<text><![CDATA[Thanks for making payment of Rupees]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="210" y="130" width="300" height="30" uuid="5f8b9e86-7379-428f-a7e0-5e78c91919f4"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DUE_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="170" width="171" height="30" uuid="93a0c628-31d8-41a4-9737-8d212c66416e"/>
+				<text><![CDATA[For Authorized Signatory]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="323" y="230" width="228" height="30" uuid="76b78f39-27f5-40cf-90a2-1e5d5c6cc907"/>
+				<textFieldExpression><![CDATA[$F{COMPANY_NAME}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="-8" y="37" width="559" height="73" uuid="9b2d1c5b-1713-4f99-8a12-7ad658ca83fe">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.components.autoresize.next" value="true"/>
+					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="RECEIPT_DS" uuid="c21ba1e3-4e02-43cf-b37b-6bc9545606ce">
+						<datasetParameter name="STR_RECEIPT_ID">
+							<datasetParameterExpression><![CDATA[$P{RECEIPT_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="94" uuid="d5c40efc-7887-4c15-bb44-496c3673dc2b">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="94" height="30" uuid="f81c634b-b281-4e74-8718-8f30118ffb8b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[RECEIPT ID]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="94" height="30" uuid="15fd6e31-0f91-417c-9b19-55b4783b1021"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{RECEIPT_ID}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="93" uuid="ec2f0875-114b-461f-a204-84d827d5b829">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="93" height="30" uuid="0d564771-d5fa-410b-920b-799b827c367c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[RECEIPT DATE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="93" height="30" uuid="19763f25-51cf-4610-ad25-9ef9100207af"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{RECEIPT_DATE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="93" uuid="c0673371-4946-4af7-8c54-7809f79fb09d">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="93" height="30" uuid="73691375-70a3-4162-883d-83326407a2ca"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[CUSTOMER NAME]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="93" height="30" uuid="2c185c2a-9363-48d7-a951-ceaec14ed207"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{CUSTOMER_NAME}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="93" uuid="fdbc588a-c695-4cf9-bc51-6b759da4d594">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="93" height="30" uuid="75b1aca4-0046-45c4-8ebb-78b3ae334d8e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[RECEIVED AMT]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="93" height="30" uuid="7c3f9d9d-f869-49da-b6fc-d90f85bb595b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{RECEIVED_AMT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="93" uuid="39cca0df-5f9f-4e9d-b908-0891dbcbb809">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="93" height="30" uuid="6da4111e-344d-41fc-9b33-d8db9602ac0f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[CLOSING BAL]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="93" height="30" uuid="8743bf29-cff8-4f5d-9965-6150a5babbd7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{CLOSING_BAL}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="93" uuid="08b680b4-5b6e-4ace-8ef4-5ec2a9442e2d">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="93" height="30" uuid="f4efdd11-24a2-42da-a705-bff219b685ae"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[ADVANCE AMOUNT]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="93" height="30" uuid="ece78891-c41f-446d-8546-ef719c9b0c60"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{ADVANCE_AMOUNT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

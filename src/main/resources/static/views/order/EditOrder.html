@@ -1,0 +1,165 @@
+<div style="width:100%; margin-top:20px; margin-bottom: 5px">
+	<div class="panel panel-info panel-table">
+		<div class="panel-heading">
+			<div class="row">
+				<div class="col col-xs-6">
+					<h2 class="panel-title">Order Notes</h2>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
+
+			<table data-ng-table="orderNoteTable" class="table table-bordered table-hover table-condensed editable-table noteTable" data-show-filter="true" 
+			demo-tracked-table="tableTracker">
+					<colgroup>
+			          <col width="2%" />
+			          <col width="30%" />
+			          <col width="70%" />
+			          <col width="2%" />
+			          <col width="2%" />
+			          <col width="2%" />
+			          <col width="2%" />
+			          <col width="2%" />
+			          <col width="2%" />
+			          <col width="2%" />
+			          <col width="2%" />
+			          <col width="2%" />
+			          <col width="2%" />
+			          <col width="2%" />
+			          <col width="2%" />
+			          <col width="1%" />
+			        </colgroup>
+					<tr x-ng-repeat="note in $data" x-ng-form="noteForm" demo-tracked-table-row="note">
+						<td title="'S. No.'" class="text-center">{{$index+1}}</td>
+						
+						<td title="'Product ID'" class="text-center" data-filter="{productID: 'text'}" data-sortable="'productID'" x-ng-switch="note.isEditing"
+							x-ng-class="productID.$dirty ? 'bg-warning' : ''" x-ng-form="productID" demo-tracked-table-cell>
+							
+							<span x-ng-switch-default class="editable-text">{{note.productID}}</span>
+							
+							<div class="controls" x-ng-class="productID.$invalid && productID.$dirty ? 'has-error' : ''" x-ng-switch-when="true">
+								<select x-ng-model="note.productID"
+									x-ng-change="loadEditedProductByID($index)"
+									x-ng-options="product.productID as product.productID for product in products"
+									class="editable-input form-control input-sm" required>
+								</select>
+							</div>
+						</td>
+
+						<td title="'Product Description'" class="text-center" data-filter="{productDescription: 'text'}" data-sortable="'productDescription'" x-ng-switch="note.isEditing"
+							x-ng-class="productDescription.$dirty ? 'bg-warning' : ''" x-ng-form="productDescription" demo-tracked-table-cell>
+							
+							<span x-ng-switch-default class="editable-text">{{note.productDescription}}</span>
+							
+							<div class="controls" x-ng-class="productDescription.$invalid && productDescription.$dirty ? 'has-error' : ''" x-ng-switch-when="true">
+								<select x-ng-model="note.productDescription"
+									x-ng-change="loadEditedProductByDesc($index)"
+									x-ng-options="product.productDescription as product.productDescription for product in products"
+									class="editable-input form-control input-sm" required>
+								</select>
+							</div>
+						</td>
+						
+						<td title="'Notation'" class="text-center" data-filter="{notation: 'text'}" data-sortable="'notation'" x-ng-switch="note.isEditing"
+							x-ng-class="notation.$dirty ? 'bg-warning' : ''" x-ng-form="notation" demo-tracked-table-cell>
+							
+							<span x-ng-switch-default class="editable-text">{{note.notation}}</span>
+							
+							<div class="controls" x-ng-class="notation.$invalid && notation.$dirty ? 'has-error' : ''" x-ng-switch-when="true">
+								<div class="input-group">
+									<input x-ng-disabled="!note.isProductSelected || note.invoiceGenerated"
+										   x-ng-model="note.notation" class="editable-input form-control input-sm" type="text" />
+								</div>
+							</div>
+						</td>
+
+						<td title="'Quantity'" class="text-center" data-filter="{quantity: 'text'}" data-sortable="'quantity'" x-ng-switch="note.isEditing"
+							x-ng-class="quantity.$dirty ? 'bg-warning' : ''" x-ng-form="quantity" demo-tracked-table-cell>
+							
+							<span x-ng-switch-default class="editable-text">{{note.quantity}}</span>
+							
+							<div class="controls" x-ng-class="quantity.$invalid && quantity.$dirty ? 'has-error' : ''" x-ng-switch-when="true">
+								<div class="input-group">
+									<input
+										x-ng-disabled="!note.isProductSelected || note.invoiceGenerated"
+										x-ng-model="note.quantity" x-ng-change="editTotal($index)"
+										class="editable-input form-control input-sm" type="number" />
+								</div>
+							</div>
+						</td>
+
+						<td title="'Rate'" class="text-center" data-filter="{rate: 'text'}" data-sortable="'rate'" x-ng-switch="note.isEditing"
+							x-ng-class="rate.$dirty ? 'bg-warning' : ''" x-ng-form="rate" demo-tracked-table-cell>
+							
+							<span x-ng-switch-default class="editable-text">{{note.rate}}</span>
+							
+							<div class="controls" x-ng-class="rate.$invalid && rate.$dirty ? 'has-error' : ''" x-ng-switch-when="true">
+								<div class="input-group">
+									<input
+										x-ng-disabled="isSaved || !note.isProductSelected || note.invoiceGenerated"
+										x-ng-model="note.rate" x-ng-change="editTotal($index)"
+										class="editable-input form-control input-sm" type="number" />
+								</div>
+							</div>
+						</td>
+						
+						<td title="'Total'" class="text-center" data-filter="{ total : 'number'}" data-sortable="'total'">{{note.total}}</td>
+
+						<td title="'Discount'" class="text-center" data-filter="{discount: 'text'}" data-sortable="'discount'" x-ng-switch="note.isEditing"
+							x-ng-class="discount.$dirty ? 'bg-warning' : ''" x-ng-form="discount" demo-tracked-table-cell>
+							
+							<span x-ng-switch-default class="editable-text">{{note.discount}}</span>
+							
+							<div class="controls" x-ng-class="discount.$invalid && discount.$dirty ? 'has-error' : ''" x-ng-switch-when="true">
+								<div class="input-group">
+									<input
+										x-ng-disabled="isSaved || !note.isProductSelected || note.invoiceGenerated"
+										x-ng-model="note.discount"
+										x-ng-change="editNetTotal($index)" class="editable-input form-control input-sm"
+										type="number" />
+								</div>
+							</div>
+						</td>						
+
+						<td title="'Net Total'" data-filter="{ netTotal : 'number'}" data-sortable="'netTotal'">
+							<label>{{note.netTotal}}</label>
+						</td>
+						<td title="'CGST'" class="text-center" x-ng-hide="simple" data-filter="{ cgst : 'number'}" data-sortable="'cgst'">
+							<label>{{note.cgst}}<span>%</span></label>
+						</td>
+						<td title="'CGST Amount'" x-ng-hide="simple" data-filter="{ cgstAmount : 'number'}" data-sortable="'cgstAmount'">
+							<label>{{note.cgstAmount | number: 2}}</label>
+						</td>
+						<td title="'SGST'" class="text-center" x-ng-hide="simple" data-filter="{ sgst : 'number'}" data-sortable="'sgst'">
+							<label>{{note.sgst}}<span>%</span></label>
+						</td>
+						<td title="'SGST Amount'" x-ng-hide="simple" data-filter="{ sgstAmount : 'number'}" data-sortable="'sgstAmount'">
+							<label>{{note.sgstAmount | number: 2}}</label>
+						</td>
+						<td title="'Net Price'" x-ng-hide="simple" data-filter="{ netPrice : 'number'}" data-sortable="'netPrice'">
+							<label>{{note.netPrice | number: 2}}</label>
+						</td>
+						<td class="text-center">
+							<button class="btn btn-default btn-sm" x-ng-click="note.isEditing = true" x-ng-if="!note.isEditing"><span class="glyphicon glyphicon-pencil"></span></button>
+				            <button class="btn btn-primary btn-sm" x-ng-click="save(note, noteForm)" x-ng-if="note.isEditing" x-ng-disabled="noteForm.$pristine || noteForm.$invalid"><span class="glyphicon glyphicon-ok"></span></button>
+				        	<button class="btn btn-danger btn-sm" x-ng-click="del(note)" x-ng-if="!note.isEditing"><span class="glyphicon glyphicon-trash"></span></button>
+				        	<button class="btn btn-default btn-sm" x-ng-click="cancel(note, noteForm)" x-ng-if="note.isEditing"><span class="glyphicon glyphicon-remove"></span></button>
+				        </td>
+				        
+					</tr>
+			</table>
+		</div>
+		<div class="panel-footer">
+			<div class="row" style="margin-bottom: 10px;">
+				<div class="col col-md-3 text-left" >
+					<button type="button" class="btn btn-primary"
+						x-ng-click="addNewEditNote()">Create New Note</button>
+				</div>
+				<div class="col col-xs-6 text-center">
+					<button type="button" class="btn btn-primary" x-ng-disabled="!isUpdate" x-ng-click="UpdateDeliveryNote()">Update</button>
+				</div>
+                <div class="col-md-3 text-left"><label>Grand Total : {{relatedOrder.grandTotal | number: 2}}</label></div>
+			</div>
+		</div>
+	</div>
+</div>

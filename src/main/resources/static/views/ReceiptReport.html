@@ -1,0 +1,27 @@
+<div class="panel-body">
+	<table class="table table-striped table-bordered table-list">
+	   <thead>
+	     <tr>
+	         <th class="hidden-xs">S.No.</th>
+	         <th class="text-center">Receipt Date</th>
+	         <th class="text-center">Receipt No.</th>
+	         <th class="text-center">Customer name</th>
+	         <th class="text-center">Amount Received</th>
+	     </tr>
+	   </thead>
+	   <tbody>
+	    <tr x-ng-repeat="receipt in report.receipts">
+	           <td class="hidden-xs text-center">{{receipt.sno}}</td>
+	     	   <td><label class="control-label col-md-12 text-center">{{receipt.receiptDate | date:'dd-MM-yyyy'}}</label></td>
+	           <td><label class="control-label col-md-12 text-center">{{receipt.receiptID}}</label></td>
+	           <td><label class="control-label col-md-12 text-center">{{receipt.customerID}}</label></td>
+	           <td><label class="control-label col-md-12 text-center">{{receipt.totalAmtPaid}}</label></td>
+	       </tr>
+	     </tbody>
+	</table>
+</div>
+<div class="panel-footer">
+	<div class="row">
+		<div class="col-md-11 text-right"><label>Total Amount Received : {{report.totalAmountReceived}} Rs</label></div>
+	</div>
+</div>

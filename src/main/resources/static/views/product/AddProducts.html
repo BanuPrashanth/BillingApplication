@@ -1,0 +1,84 @@
+<div style="margin-top:5px; margin-bottom: 10px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+<div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">Add Product</div>
+            </div> 
+             
+            <div class="panel-body">
+                                        
+                    <form novalidate name="productform" class="form-horizontal" role="form">                        
+                        
+                        <div class="form-group required" style="margin-right: 30px">
+                            <label for="id_username" class="control-label col-md-4  requiredField">Product ID<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 ">
+                                <input class="input-md  textinput textInput form-control" x-ng-disabled="true" x-ng-model="product.productID" name="id" placeholder="Enter Product ID" style="margin-bottom: 10px" type="text" required/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group required" style="margin-right: 30px">
+                            <label for="id_email" class="control-label col-md-4  requiredField">Product Desc<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 ">
+                                <input class="input-md emailinput form-control" x-ng-model="product.productDescription" name="description" placeholder="Enter Product Desc" style="margin-bottom: 10px" type="text" required/>
+                            </div>     
+                        </div>
+                        
+                        <div class="form-group required" style="margin-right: 30px"> 
+                            <label for="id_name" class="control-label col-md-4  requiredField"> Price<span class="asteriskField">*</span> </label> 
+                            <div class="controls col-md-8 "> 
+                                <input class="input-md textinput textInput form-control" x-ng-model="product.rate" name="rate" placeholder="Enter Product Price" style="margin-bottom: 10px" type="Number" required/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group required" style="margin-right: 30px">
+                            <label for="id_password1" class="control-label col-md-4  requiredField">Product Type<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 "> 
+                                <input class="input-md textinput textInput form-control" x-ng-model="product.productType" name="type" placeholder="Enter Product Type" style="margin-bottom: 10px" type="text" required/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group required" style="margin-right: 30px">
+                             <label for="id_password2" class="control-label col-md-4  requiredField"> HSN Number<span class="asteriskField">*</span> </label>
+                             <div class="controls col-md-8 ">
+                                <input class="input-md textinput textInput form-control" x-ng-model="product.otherProductCode" name="hsnNumber" placeholder="Enter HSN Number" style="margin-bottom: 10px" type="text" required/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group required" style="margin-right: 30px"> 
+                            <label class="control-label col-md-4  requiredField"> GST<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8" style="margin-bottom: 10px">
+                            	<div class="input-group">
+                                	<input class="form-control" x-ng-model="product.gst" name="gst" placeholder="Enter GST" type="Number" required/>
+                            		<span class="input-group-addon">%</span> 
+                            	</div>
+                            </div> 
+                            
+                        </div>
+                        
+                        <div class="form-group" style="margin-right: 30px"> <!-- State Button -->
+                            <label for="state_id" class="control-label col-md-4">Status</label>
+                            <div class="controls col-md-8 " style="margin-bottom: 10px">
+                                <select x-ng-model="product.status" class="form-control" x-ng-options="status for status in productStatus"></select>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-right: 30px">
+                            <label for="id_catagory" class="control-label col-md-4  requiredField"> Effective Date</label>
+                            <div class="col-md-8">
+                            	<div class="input-group" style="margin-bottom: 20px;">
+	                            	<input class="form-control" x-ng-disabled="true" x-ng-model="product.effectiveDate" name="effectiveDate" type="text" uib-datepicker-popup="{{dateformat}}" min-date="mindate" is-open="showdp" />
+							    	<span class="input-group-btn">
+							            <button type="button" class="btn btn-default" ng-click="showcalendar($event)">
+							                <i class="glyphicon glyphicon-calendar"></i>
+							            </button>
+							        </span>
+						    	</div>
+                            </div>						    
+                        </div>
+                        
+                        <div class="col-md-offset-6 controls" class="btn-group" style="margin-bottom: 30px">
+                            	<button x-ng-disabled="productform.$invalid" class="btn btn-primary" x-ng-click="addProduct(product)">Add Product</button>
+                        </div>
+                            
+                    </form>
+            </div>
+</div>
+</div>

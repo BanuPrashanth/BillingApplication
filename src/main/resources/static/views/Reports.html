@@ -1,0 +1,81 @@
+<div class="container" style="width: 98%;">
+<div class="row" style="margin-bottom: 30px;">
+	<div class="col-md-3"></div>
+	<div class="col-md-6 text-center">
+		<div class="btn-group btn-group-justified" role="group" aria-label="...">
+		  <div class="btn-group" role="group">
+		    <button type="button" class="btn btn-default" x-ng-click="changeMode('sales')"><span class="glyphicon glyphicon-file"></span>&nbsp;Sales</button>
+		  </div>
+		  <div class="btn-group" role="group">
+		    <button type="button" class="btn btn-default" x-ng-click="changeMode('partyWise')"><span class="glyphicon glyphicon-file"></span>&nbsp;Party Wise</button>
+		  </div>
+		  <div class="btn-group" role="group">
+		    <button type="button" class="btn btn-default" x-ng-click="changeMode('receipt')"><span class="glyphicon glyphicon-file"></span>&nbsp;Receipt</button>
+		  </div>
+		  <div class="btn-group" role="group">
+		    <button type="button" class="btn btn-default" x-ng-click="changeMode('stockWise')"><span class="glyphicon glyphicon-file"></span>&nbsp;Stock Wise</button>
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-3"></div>
+</div>
+<div class="row" >
+	<div class="panel panel-info panel-table" style="margin-bottom: 80px;">
+	
+	    <div class="panel-heading">
+		    <div class="row">
+	                  <div class="col col-xs-12">
+	                    <h1 class="panel-title">Reports</h1>
+	                  </div>
+	         </div>
+	         <hr>
+	         
+		    <div class="row" style="margin-bottom: 10px">
+			
+			<div class="form-group col col-xs-3">
+	             <div class="form-group">
+	                 <label class="control-label col-md-4 text-right">From<span class="asteriskField">*</span></label>
+	                 <div class="controls col-md-8 text-left ">
+	                     <input class="input-md  textinput textInput form-control" id="fromDate" x-ng-model="report.fromDate"  type="Date" />
+	                 </div>
+	             </div>
+	        </div>
+	        <div class="form-group col col-xs-3">
+	             <div class="form-group">
+	                 <label class="control-label col-md-4 text-right">To<span class="asteriskField">*</span></label>
+	                 <div class="controls col-md-8 text-left">
+	                     <input class="input-md  textinput textInput form-control" id="toDate" x-ng-model="report.toDate" type="Date" />
+	                 </div>
+	             </div>
+	        </div>
+	        <div class="form-group col col-xs-2 text-right">
+				<button type="button" class="btn btn-primary" x-ng-click="generateReport()">Get Report</button>
+	        </div>
+	        <div class="form-group col col-xs-4 text-center">
+				<button type="button" class="btn btn-primary" x-ng-click="exportReport()">Export</button>
+	        </div>
+		</div>
+		<div class="row">
+		  <div class="col-sm-2">
+		    <div class="input-group">
+		      <span class="input-group-addon">
+		        <input type="checkbox" x-ng-model="simple">
+		      </span>
+		      <label class="form-control text-center">Simple</label>
+		    </div><!-- /input-group -->
+		  </div><!-- /.col-sm-2 -->
+		</div><!-- /.row -->
+		</div><!-- Panel Heading -->
+		<sales-report x-ng-show="modes.sales"></sales-report>
+        <receipt-report x-ng-show="modes.receipt" ></receipt-report>
+		<stock-wise-report x-ng-show="modes.stockWise"></stock-wise-report>
+        <party-wise-report x-ng-show="modes.partyWise" ></party-wise-report>
+	    </div>
+    </div><!-- row -->
+</div><!-- Container -->
+	
+
+
+
+
+

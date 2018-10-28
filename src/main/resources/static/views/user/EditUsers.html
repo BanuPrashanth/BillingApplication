@@ -1,0 +1,78 @@
+<div style="width:100%; margin-top:20px; margin-bottom: 5px">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">Edit User</div>
+            </div>  
+            <div class="panel-body">
+                                        
+                    <form novalidate name="userform" class="form-horizontal" role="form">                        
+                        <div class="alert alert-danger col-md-12" x-ng-if="errorMsg!=undefined">{{errorMsg}}</div>
+                        
+                        <div class="form-group required" style="margin-right: 30px">
+                            <label for="id_email" class="control-label col-md-4  requiredField">User Name<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 ">
+                                <input class="input-md emailinput form-control" x-ng-model="editUser.userName" name="name" placeholder="Enter User Name" style="margin-bottom: 10px" type="text" required/>
+                            </div>     
+                        </div>
+                        
+                        <div class="form-group required" style="margin-right: 30px">
+                             <label class="control-label col-md-4  requiredField"> Address<span class="asteriskField">*</span> </label>
+                             <div class="controls col-md-8 ">
+                                <input class="input-md textinput textInput form-control" x-ng-model="editUser.address" name="hsnNumber" placeholder="Enter Address" style="margin-bottom: 10px" type="text" required/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group required" style="margin-right: 30px"> 
+                            <label class="control-label col-md-4  requiredField"> Phone Number<span class="asteriskField">*</span> </label> 
+                            <div class="controls col-md-8 "> 
+                                <input class="input-md textinput textInput form-control" x-ng-model="editUser.phone" name="phone" x-ng-maxlength="10" placeholder="Enter Phone Number" style="margin-bottom: 10px" type="text" required/>
+	                            <span class="help-block" 
+					                  x-ng-show="(userform.phone.$error.maxlength && 
+					                           userform.phone.$dirty)">
+					                           <label class="label label-danger">phone number should not be more than 10 digits!</label>
+					            </span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-right: 30px">
+                            <label class="control-label col-md-4">User Type</label>
+                            <div class="controls col-md-8 " style="margin-bottom: 10px">
+                                <select x-ng-model="editUser.userType" class="form-control">
+                                <option value="Normal">Normal</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Super Admin">Super Admin</option>
+                            </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-right: 30px">
+                            <label class="control-label col-md-4">Status</label>
+                            <div class="controls col-md-8 " style="margin-bottom: 10px">
+                                <select x-ng-model="editUser.status" class="form-control" required>
+                                	<option value="Active">Active</option>
+                                	<option value="Inactive">Inactive</option>
+                            	</select>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-right: 30px">
+                            <label class="control-label col-md-4"> Create Date<span class="asteriskField">*</span> </label>
+                            <div class="col-md-8">
+                            	<div class="input-group" style="margin-bottom: 20px;">
+	                            	<input class="form-control" x-ng-disabled="true" x-ng-model="editUser.createDate" name="effectiveDate" type="text" uib-datepicker-popup="{{dateformat}}" min-date="mindate" is-open="showdp" />
+							    	<span class="input-group-btn">
+							            <button type="button" class="btn btn-default" ng-click="showcalendar($event)">
+							                <i class="glyphicon glyphicon-calendar"></i>
+							            </button>
+							        </span>
+						    	</div>
+                            </div>						    
+                        </div>
+                        
+                        <div class="col-md-offset-6 controls" class="btn-group">
+                            	<button class="btn btn-primary" x-ng-click="update(editUser)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Update</button>
+                        </div>
+                            
+                    </form>
+            </div>
+        </div>
+    </div> 
