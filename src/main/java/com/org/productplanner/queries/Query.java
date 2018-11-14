@@ -26,13 +26,15 @@ public class Query {
 	 */
 	public static final String ADD_CUSTOMER=new StringBuilder()
 											.append("INSERT INTO CUSTOMER_TBL(OBJID,CUSTOMER_ID,CUSTOMER_NAME,")
-											.append("ADDRESS,PHONE_NUMBER,GST,PAN_NUMBER,CUSTOMER_SPOC,")
-											.append("STATE,START_DATE) VALUES(?,?,?,?,?,?,?,?,?,?)").toString();
+											.append("ADDRESS,PHONE_NUMBER,GST,PAN_NUMBER,CUSTOMER_SPOC,OPENING_BALANCE,")
+											.append("STATE,START_DATE) VALUES(?,?,?,?,?,?,?,?,?,?,?)").toString();
 	
 	public static final String DELETE_CUSTOMERS="DELETE FROM CUSTOMER_TBL WHERE CUSTOMER_ID = ? ";
 	
-	public static final String UPDATE_CUSTOMER="UPDATE CUSTOMER_TBL SET CUSTOMER_NAME = ?,ADDRESS = ?,PHONE_NUMBER = ?,GST = ?,PAN_NUMBER = ?,CUSTOMER_SPOC = ?,STATE = ?,MODIFIED_DATE = ? WHERE CUSTOMER_ID = ?";
+	public static final String UPDATE_CUSTOMER="UPDATE CUSTOMER_TBL SET CUSTOMER_NAME = ?,ADDRESS = ?,PHONE_NUMBER = ?,GST = ?,PAN_NUMBER = ?,CUSTOMER_SPOC = ?,OPENING_BALANCE = ?,STATE = ?,MODIFIED_DATE = ? WHERE CUSTOMER_ID = ?";
 	
+	public static final String UPDATE_OPENING_BALANCE="UPDATE CUSTOMER_TBL SET OPENING_BALANCE = 0 WHERE CUSTOMER_ID= ? ";
+
 	public static final String GET_CUSTOMER_STATE="SELECT STATE FROM CUSTOMER_TBL WHERE CUSTOMER_ID= ? ";
 	
 	public static final String GET_CUSTOMER="SELECT * FROM CUSTOMER_TBL";

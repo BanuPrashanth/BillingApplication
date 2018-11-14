@@ -31,7 +31,7 @@ import com.org.productplanner.rowmappers.SimpleNotesRowMapper;
 public class InvoiceService extends CommonService{
 	
 	@Autowired
-    private JdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 	
 	public Map<String,String> generateInvoiceId(Date invoiceDate,boolean simple)
     {
@@ -257,7 +257,7 @@ public class InvoiceService extends CommonService{
     	float advance=0;
     	try{
     		String query=simple?GET_LATEST_X_ADVANCE:GET_LATEST_ADVANCE;
-        	Object obj= jdbcTemplate.queryForObject(query, Object.class, customerID,customerID);
+			Object obj= jdbcTemplate.queryForObject(query, Object.class, customerID,customerID);
         	advance=Float.parseFloat(obj+"");
     	}catch(EmptyResultDataAccessException e)
     	{
@@ -341,9 +341,9 @@ public class InvoiceService extends CommonService{
     {
 
     	Variant variant=null;
-    	List<Variant> listOfVariants=new ArrayList<Variant>();
+		List<Variant> listOfVariants=new ArrayList<Variant>();
     	List<Map<String,Object>> result=jdbcTemplate.queryForList(GET_SUMMATION_OF_VARIANTS.replace("#", formatString(listOfInvoiceId)));
-    	for (Map<String, Object> map : result) {
+		for (Map<String, Object> map : result) {
 			variant=new Variant();
 			float gst=Float.parseFloat(""+map.get("GST"));
 			variant.setName(""+map.get("GST"));
@@ -359,6 +359,4 @@ public class InvoiceService extends CommonService{
     	
     	return listOfVariants;
     }
-    
-    
 }

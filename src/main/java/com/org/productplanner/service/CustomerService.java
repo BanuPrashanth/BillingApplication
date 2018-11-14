@@ -31,4 +31,8 @@ public class CustomerService extends CommonService{
     {
     	customerRepository.delete(customerID);
     }
+    public void updateOpeningBalance(String customerID)
+    {
+        customerRepository.updateOpeningBalance(customerID);
+    }
 }

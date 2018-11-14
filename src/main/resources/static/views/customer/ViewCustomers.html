@@ -13,15 +13,16 @@
 			<table data-ng-table="tableCustomer" class="table table-condensed table-bordered table-striped" data-show-filter="true">
 					<colgroup>
 			          <col width="2%" />
-			          <col width="15%" />
+			          <col width="10%" />
 			          <col width="25%" />
 			          <col width="25%" />
 			          <col width="2%" />
 			          <col width="2%" />
 			          <col width="2%" />
-			          <col width="2%" />
-			          <col width="15%" />
-			          <col width="15%" />
+			          <col width="4%" />
+			          <col width="6%" />
+					  <col width="15%" />
+					  <col width="8%" />
 			        </colgroup>
 	                  <tr x-ng-repeat="customer in $data">
 	                  	  <td title="'S. No.'" class="text-center">{{$index+1}}</td>
@@ -31,7 +32,8 @@
                           <td title="'Phone'" class="text-center" data-filter="{ phone : 'number'}" data-sortable="'phone'">{{customer.phone}}</td>
                           <td title="'GSTIN'" class="text-center" data-filter="{ gst : 'number'}" data-sortable="'gst'">{{customer.gst}}</td>
                           <td title="'PAN Number'" class="text-center" data-filter="{ panNumber : 'text'}" data-sortable="'panNumber'">{{customer.panNumber}}</td>
-                          <td title="'Customer Spoc.'" class="text-center" data-filter="{ customerSPOC : 'text'}" data-sortable="'customerSPOC'">{{customer.customerSPOC}}</td>
+						  <td title="'Customer Spoc.'" class="text-center" data-filter="{ customerSPOC : 'text'}" data-sortable="'customerSPOC'">{{customer.customerSPOC}}</td>
+						  <td title="'Current Balance'" class="text-center" data-filter="{ openingBalance : 'number'}" data-sortable="'openingBalance'">{{customer.openingBalance | number : 2}}</td>
                           <td title="'State'" class="text-center" data-filter="{ state : 'text'}" data-sortable="'state'">{{customer.state}}</td>
                           <td title="'Start Date'" class="text-center" data-filter="{ startDate : 'text'}" data-sortable="'startDate'">{{customer.startDate | date : 'dd-MM-yyyy'}}</td>
                           <td title="'Edit'">

@@ -30,6 +30,7 @@ app.controller('customerController', ['$scope','stateService','customerService',
 				gst: undefined,
 				panNumber: '',
 				customerSPOC: '',
+				openingBalance: 0,
 				state: '',
 				startDate: new Date()
 		}

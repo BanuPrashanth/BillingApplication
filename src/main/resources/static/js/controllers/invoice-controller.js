@@ -1,4 +1,4 @@
-app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$window',function($scope,$http,deliveryNoteService,$window) {
+app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$window', 'customerService',function($scope,$http,deliveryNoteService,$window,customerService) {
 	$scope.heading='Invoice';
 	
 	reset=function()
@@ -83,6 +83,7 @@ app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$wi
 			if(value.customerID==_customerID)
 				{
 					$scope.invoice.customerName=value.customerName;
+					$scope.invoice.openingBalance = value.openingBalance;
 				}
 		});
 		
@@ -95,6 +96,7 @@ app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$wi
 			if(value.customerName==_customerName)
 				{
 					$scope.invoice.customerID=value.customerID;
+					$scope.invoice.openingBalance = value.openingBalance;
 				}
 		});
 		
@@ -181,7 +183,8 @@ app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$wi
 				$scope.invoice.cgstAmount = cgstAmount;
 				$scope.invoice.sgstAmount = sgstAmount;
 				$scope.invoice.gstAmount = $scope.invoice.cgstAmount + $scope.invoice.sgstAmount;
-				$scope.invoice.netAmount=$scope.invoice.gstAmount + $scope.invoice.grossAmount;
+				$scope.invoice.closingBalance=$scope.invoice.gstAmount + $scope.invoice.grossAmount;
+				$scope.invoice.netAmount = $scope.invoice.closingBalance - Number($scope.invoice.openingBalance);
 			}
 			
 		});
@@ -201,8 +204,9 @@ app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$wi
 	
 	$scope.generateInvoiceID();
 	
-	$scope.saveInvoice=function()
+	$scope.saveInvoice=function(customerID)
 	{
+		$scope.updateOpeningBalance(customerID);
 		// Simple POST request
     	$http({
     	  method: 'POST',
@@ -224,6 +228,12 @@ app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$wi
     	  }, function errorCallback(response) {
     		  $window.alert('Server Error!');
     	  });
+	}
+
+	$scope.updateOpeningBalance=function(customerID)
+	{
+		console.log(customerService.updateOpeningBalance)
+		customerService.updateOpeningBalance(customerID);
 	}
 	
 	$scope.downloadInvoice=function()

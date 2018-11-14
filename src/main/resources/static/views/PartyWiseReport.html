@@ -27,18 +27,20 @@
          <th class="text-center">Transaction Type</th>
          <th class="text-center">Transaction Date</th>
          <th class="text-center">Reference Number</th>
-         <th class="text-center">Invoice Amount</th>
-         <th class="text-center">Transaction Amount</th>
+         <th class="text-center" ng-if="report.transactionType === 'Sales' || report.transactionType === 'Sales/Receipt'">Invoice Amount</th>
+         <th class="text-center" ng-if="report.transactionType === 'Receipt' || report.transactionType === 'Sales/Receipt'">Transaction Amount</th>
+         <th class="text-center" ng-if="report.transactionType === 'Sales/Receipt'">Closing Balance</th>
      </tr>
    </thead>
    <tbody>
     <tr x-ng-repeat="party in report.parties">
            <td class="hidden-xs text-center">{{party.sno}}</td>
            <td><label class="control-label col-md-12 text-center">{{party.transactionType}}</label></td>
-     	   <td><label class="control-label col-md-12 text-center">{{party.transactionDate | date:'dd-MM-yyyy'}}</label></td>
+     	     <td><label class="control-label col-md-12 text-center">{{party.transactionDate | date:'dd-MM-yyyy'}}</label></td>
            <td><label class="control-label col-md-12 text-center">{{party.referenceNumber}}</label></td>
-           <td><label class="control-label col-md-12 text-center">{{party.transactionAmount | number:2}}</label></td>
-           <td><label class="control-label col-md-12 text-center">{{party.invoiceAmount}}</label></td>
+           <td ng-if="report.transactionType === 'Sales' || report.transactionType === 'Sales/Receipt'"><label class="control-label col-md-12 text-center">{{ party.invoiceAmount | number: 2}}</label></td>
+           <td ng-if="report.transactionType === 'Receipt' || report.transactionType === 'Sales/Receipt'"><label class="control-label col-md-12 text-center">{{party.transactionAmount | number: 2}}</label></td>
+           <td ng-if="report.transactionType === 'Sales/Receipt'"><label class="control-label col-md-12 text-center">CB</label></td>
        </tr>
      </tbody>
 </table>
@@ -49,7 +51,7 @@
 		<div class="col-md-3"></div>
 		<div class="col-md-3"></div>
 		<div class="col-md-3">
-			<label>Closing Balance : {{report.closingBalance | number:2}}</label>
+			 <label> Closing Balance : {{report.closingBalance | number:2}}</label>
 		</div>
 	</div>
 </div>

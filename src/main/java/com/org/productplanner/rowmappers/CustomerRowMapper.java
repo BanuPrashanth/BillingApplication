@@ -19,8 +19,9 @@ public class CustomerRowMapper implements RowMapper<Customer>{
 		customer.setGst(rs.getString(6));
 		customer.setPanNumber(rs.getString(7));
 		customer.setCustomerSPOC(rs.getString(8));
-		customer.setState(rs.getString(9));
-		customer.setStartDate(rs.getDate(10));
+		customer.setOpeningBalance(rs.getString(9));
+		customer.setState(rs.getString(10));
+		customer.setStartDate(rs.getDate(11));
 		return customer;
 	}
 

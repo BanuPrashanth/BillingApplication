@@ -69,5 +69,4 @@ public class InvoiceController {
 	{
 		return invoiceService.downloadInoice(invoice, response,simple);
 	}
-	
 }

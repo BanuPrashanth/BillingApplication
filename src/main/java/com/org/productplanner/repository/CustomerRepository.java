@@ -30,7 +30,8 @@ public class CustomerRepository{
         					customer.getPhone(),
         					customer.getGst(),
         					customer.getPanNumber(),
-        					customer.getCustomerSPOC(),
+							customer.getCustomerSPOC(),
+							customer.getOpeningBalance(),
         					customer.getState(),
         					customer.getStartDate()
             			});
@@ -40,7 +41,12 @@ public class CustomerRepository{
 	{
     	jdbcTemplate.update(DELETE_CUSTOMERS,customerID);
 	}
-    
+	
+	public void updateOpeningBalance(String customerID)
+	{
+		jdbcTemplate.update(UPDATE_OPENING_BALANCE,customerID);
+	}
+
 	public void update(Customer customer)
 	{
     		jdbcTemplate.update(UPDATE_CUSTOMER, 
@@ -49,12 +55,13 @@ public class CustomerRepository{
     				customer.getPhone(),
     				customer.getGst(),
     				customer.getPanNumber(),
-    				customer.getCustomerSPOC(),
+					customer.getCustomerSPOC(),
+					customer.getOpeningBalance(),
     				customer.getState(),
     				new Date(),
     				customer.getCustomerID());
 	}
-	
+
 	public List<Customer> getCustomers()
 	{
 		return jdbcTemplate.query(GET_CUSTOMER, new CustomerRowMapper());

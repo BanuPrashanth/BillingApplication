@@ -19,6 +19,8 @@ public class Customer {
 	private String panNumber;
 	
 	private String customerSPOC;
+
+	private String openingBalance;
 	
 	private String state;
 	
@@ -92,6 +94,14 @@ public class Customer {
 
 	public void setCustomerSPOC(String customerSPOC) {
 		this.customerSPOC = customerSPOC;
+	}
+
+	public String getOpeningBalance() {
+		return openingBalance;
+	}
+
+	public void setOpeningBalance(String openingBalance){
+		this.openingBalance = openingBalance;
 	}
 
 	public String getState() {
