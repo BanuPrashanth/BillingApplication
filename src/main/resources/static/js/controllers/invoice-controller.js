@@ -1,4 +1,4 @@
-app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$window', 'customerService',function($scope,$http,deliveryNoteService,$window,customerService) {
+app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$window','customerService',function($scope,$http,deliveryNoteService,$window,customerService) {
 	$scope.heading='Invoice';
 	
 	reset=function()
@@ -232,8 +232,17 @@ app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$wi
 
 	$scope.updateOpeningBalance=function(customerID)
 	{
-		console.log(customerService.updateOpeningBalance)
-		customerService.updateOpeningBalance(customerID);
+		Object.keys($scope.customers).forEach(function(index){
+			if($scope.customers[index].customerID == customerID){
+				$scope.customers[index].openingBalance = 0;
+				deliveryNoteService.update('/customer', $scope.customers[index])
+				.then(function successCallback(response){
+					console.log('Cleared Opening Balance Successfully');
+				}, function failureCallback(failure){
+					console.log('Failed to Clear Opening Balance');
+				})
+			}
+		});
 	}
 	
 	$scope.downloadInvoice=function()

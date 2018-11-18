@@ -42,11 +42,6 @@ public class CustomerRepository{
     	jdbcTemplate.update(DELETE_CUSTOMERS,customerID);
 	}
 	
-	public void updateOpeningBalance(String customerID)
-	{
-		jdbcTemplate.update(UPDATE_OPENING_BALANCE,customerID);
-	}
-
 	public void update(Customer customer)
 	{
     		jdbcTemplate.update(UPDATE_CUSTOMER, 
