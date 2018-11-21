@@ -63,6 +63,14 @@
              </div>
 		</div>
 		<div class="row" style="margin-bottom: 10px">
+			<div class="form-group">
+				<label class="control-label col-md-2">Previous Opening Balance : </label>
+				<div class="controls col-md-4 text-left ">
+					 <label class="control-label col-md-12 text-center">{{receipt.previousOpeningBalance | number:2}}</label>
+				</div>
+			</div>
+	   </div>
+		<div class="row" style="margin-bottom: 10px">
              <div class="form-group">
                  <label class="control-label col-md-2">Opening Advance Amount : </label>
                  <div class="controls col-md-4 text-left ">
@@ -74,7 +82,7 @@
              <div class="form-group">
                  <label class="control-label col-md-2">Amount To Be Paid : </label>
                  <div class="controls col-md-4 text-left ">
-                 	 <label class="control-label col-md-12 text-center">{{(receipt.openingBalance - receipt.openingAdvanceAmount) | number:2}}</label>
+                 	 <label class="control-label col-md-12 text-center">{{receipt.amountToBePaid | number:2}}</label>
                  </div>
              </div>
 		</div>
@@ -169,7 +177,7 @@
 				</div>
                 <div class="row" style="margin-bottom: 30px;margin-top: 20px;">
                   <div class="col col-md-4 text-right">
-                  	<button type="button" class="btn btn-primary" x-ng-disabled="isSaved || isSaveDisabled" x-ng-click="saveReceipt()">Save</button>
+                  	<button type="button" class="btn btn-primary" x-ng-disabled="isSaved || isSaveDisabled" x-ng-click="saveReceipt(receipt.customerID)">Save</button>
                   </div>
                   <div class="col col-md-4 text-center">
                     <button class="btn btn-success" x-ng-disabled="!isSaved" x-ng-click="downloadReceipt()">Download</button>

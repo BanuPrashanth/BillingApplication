@@ -183,8 +183,8 @@ app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$wi
 				$scope.invoice.cgstAmount = cgstAmount;
 				$scope.invoice.sgstAmount = sgstAmount;
 				$scope.invoice.gstAmount = $scope.invoice.cgstAmount + $scope.invoice.sgstAmount;
-				$scope.invoice.closingBalance=$scope.invoice.gstAmount + $scope.invoice.grossAmount;
-				$scope.invoice.netAmount = $scope.invoice.closingBalance - Number($scope.invoice.openingBalance);
+				$scope.invoice.netAmount=$scope.invoice.gstAmount + $scope.invoice.grossAmount;
+				$scope.invoice.closingBalance = $scope.invoice.netAmount - Number($scope.invoice.openingBalance);
 			}
 			
 		});
@@ -204,9 +204,8 @@ app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$wi
 	
 	$scope.generateInvoiceID();
 	
-	$scope.saveInvoice=function(customerID)
+	$scope.saveInvoice=function()
 	{
-		$scope.updateOpeningBalance(customerID);
 		// Simple POST request
     	$http({
     	  method: 'POST',
@@ -230,21 +229,6 @@ app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$wi
     	  });
 	}
 
-	$scope.updateOpeningBalance=function(customerID)
-	{
-		Object.keys($scope.customers).forEach(function(index){
-			if($scope.customers[index].customerID == customerID){
-				$scope.customers[index].openingBalance = 0;
-				deliveryNoteService.update('/customer', $scope.customers[index])
-				.then(function successCallback(response){
-					console.log('Cleared Opening Balance Successfully');
-				}, function failureCallback(failure){
-					console.log('Failed to Clear Opening Balance');
-				})
-			}
-		});
-	}
-	
 	$scope.downloadInvoice=function()
 	{
 		// Simple POST request

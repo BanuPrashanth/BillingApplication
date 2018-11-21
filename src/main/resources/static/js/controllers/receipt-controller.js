@@ -10,7 +10,9 @@ app.controller('installmentReceiptController', ['$scope','deliveryNoteService','
 			closingBalance: 0,
 			totalAmtPaid: 0,
 			openingAdvanceAmount: 0.0,
-			closingAdvanceAmount: 0.0
+			closingAdvanceAmount: 0.0,
+			previousAdvanceBalance: 0.0,
+			previousOpeningBalance: 0.0
 			};
 
 	$scope.simple=false;
@@ -30,6 +32,14 @@ app.controller('installmentReceiptController', ['$scope','deliveryNoteService','
 			if(value.customerID==_customerID)
 				{
 					$scope.receipt.customerName=value.customerName;
+					if(value.openingBalance < 0){
+						$scope.receipt.previousOpeningBalance = value.openingBalance;
+					}else if(value.openingBalance >0){
+						$scope.receipt.previousAdvanceBalance = value.openingBalance;
+					}else{
+						$scope.receipt.previousOpeningBalance = 0;
+						$scope.receipt.previousAdvanceBalance = 0;
+					}
 				}
 		});
 		$scope.generateReceipt();
@@ -42,6 +52,14 @@ app.controller('installmentReceiptController', ['$scope','deliveryNoteService','
 			if(value.customerName==_customerName)
 				{
 					$scope.receipt.customerID=value.customerID;
+					if(value.openingBalance < 0){
+						$scope.receipt.previousOpeningBalance = value.openingBalance;
+					}else if(value.openingBalance >0){
+						$scope.receipt.previousAdvanceBalance = value.openingBalance;
+					}else{
+						$scope.receipt.previousOpeningBalance = 0;
+						$scope.receipt.previousAdvanceBalance = 0;
+					}
 				}
 		});
 		$scope.generateReceipt();
@@ -63,7 +81,7 @@ app.controller('installmentReceiptController', ['$scope','deliveryNoteService','
 			}
 		totalAmtPaid-=invoice.invoiceAmtPaid;
 		invoice.currentBalance=invoice.previousBalance - invoice.invoiceAmtPaid;
-		$scope.receipt.closingBalance+=invoice.currentBalance;
+		$scope.receipt.closingBalance=invoice.currentBalance + $scope.receipt.closingBalance + Number($scope.receipt.previousOpeningBalance);
 		$scope.receipt.clearAmount+=invoice.invoiceAmtPaid;
 			
 		});
@@ -82,7 +100,7 @@ app.controller('installmentReceiptController', ['$scope','deliveryNoteService','
 			var receipt=response.data;
 			
 			$scope.receipt.invoices=receipt.invoices;
-			$scope.receipt.openingAdvanceAmount=receipt.openingAdvanceAmount;
+			$scope.receipt.openingAdvanceAmount=receipt.openingAdvanceAmount + Number($scope.receipt.previousAdvanceBalance);
 			if($scope.receipt.invoices.length==0)
 			{
 				$window.alert('No Record Found!');
@@ -98,11 +116,31 @@ app.controller('installmentReceiptController', ['$scope','deliveryNoteService','
 			});
 			
 		});
-	
+		if(($scope.receipt.openingBalance - $scope.receipt.openingAdvanceAmount) < 0){
+			$scope.receipt.amountToBePaid = 0;
+		}else{
+			$scope.receipt.amountToBePaid = $scope.receipt.openingBalance - $scope.receipt.openingAdvanceAmount;
+		}
 	};
-	
-	$scope.saveReceipt=function()
+
+	$scope.updateOpeningBalance=function(customerID)
 	{
+		Object.keys($scope.customers).forEach(function(index){
+			if($scope.customers[index].customerID == customerID){
+				$scope.customers[index].openingBalance = 0;
+				deliveryNoteService.update('/customer', $scope.customers[index])
+				.then(function successCallback(response){
+					console.log('Cleared Opening Balance Successfully');
+				}, function failureCallback(failure){
+					console.log('Failed to Clear Opening Balance');
+				})
+			}
+		});
+	}
+	
+	$scope.saveReceipt=function(customerID)
+	{
+		$scope.updateOpeningBalance(customerID);
     	$http({
     	  method: 'POST',
     	  url: '/receipt/save/'+$scope.simple,
