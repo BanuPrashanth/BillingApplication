@@ -27,13 +27,16 @@ app.controller('installmentReceiptController', ['$scope','deliveryNoteService','
 	
 	$scope.loadCustomerName=function()
 	{
+		$scope.receipt.previousAdvanceBalance = 0;
+		$scope.receipt.previousOpeningBalance = 0;
 		var _customerID=$scope.receipt.customerID;
 		angular.forEach($scope.customers,function(value,key){
 			if(value.customerID==_customerID)
 				{
 					$scope.receipt.customerName=value.customerName;
+					value.openingBalance = Number(value.openingBalance);
 					if(value.openingBalance < 0){
-						$scope.receipt.previousOpeningBalance = value.openingBalance;
+						$scope.receipt.previousOpeningBalance = Math.abs(value.openingBalance);
 					}else if(value.openingBalance >0){
 						$scope.receipt.previousAdvanceBalance = value.openingBalance;
 					}else{
@@ -47,13 +50,16 @@ app.controller('installmentReceiptController', ['$scope','deliveryNoteService','
 	
 	$scope.loadCustomerID=function()
 	{
+		$scope.receipt.previousAdvanceBalance = 0;
+		$scope.receipt.previousOpeningBalance = 0;
 		var _customerName=$scope.receipt.customerName;
 		angular.forEach($scope.customers,function(value,key){
 			if(value.customerName==_customerName)
 				{
 					$scope.receipt.customerID=value.customerID;
+					value.openingBalance = Number(value.openingBalance);
 					if(value.openingBalance < 0){
-						$scope.receipt.previousOpeningBalance = value.openingBalance;
+						$scope.receipt.previousOpeningBalance = Math.abs(value.openingBalance);
 					}else if(value.openingBalance >0){
 						$scope.receipt.previousAdvanceBalance = value.openingBalance;
 					}else{
@@ -68,7 +74,7 @@ app.controller('installmentReceiptController', ['$scope','deliveryNoteService','
 	{
 		$scope.receipt.closingBalance=0;
 		$scope.receipt.clearAmount=0;
-		$scope.receipt.totalAmtPaid=parseInt($scope.receipt.totalAmtPaid);
+		$scope.receipt.totalAmtPaid=Number($scope.receipt.totalAmtPaid);
 		var totalAmtPaid=$scope.receipt.totalAmtPaid+$scope.receipt.openingAdvanceAmount;
 		angular.forEach($scope.receipt.invoices,function(invoice,key){
 			if(invoice.previousBalance<totalAmtPaid)
@@ -81,11 +87,14 @@ app.controller('installmentReceiptController', ['$scope','deliveryNoteService','
 			}
 		totalAmtPaid-=invoice.invoiceAmtPaid;
 		invoice.currentBalance=invoice.previousBalance - invoice.invoiceAmtPaid;
-		$scope.receipt.closingBalance=invoice.currentBalance + $scope.receipt.closingBalance + Number($scope.receipt.previousOpeningBalance);
+		$scope.receipt.closingBalance=invoice.currentBalance + $scope.receipt.closingBalance;
 		$scope.receipt.clearAmount+=invoice.invoiceAmtPaid;
-			
 		});
-		$scope.receipt.closingAdvanceAmount=totalAmtPaid;
+		$scope.receipt.closingAdvanceAmount=totalAmtPaid - $scope.receipt.previousOpeningBalance;
+		if($scope.receipt.closingAdvanceAmount<0){
+			$scope.receipt.closingBalance= $scope.receipt.closingBalance + Math.abs($scope.receipt.closingAdvanceAmount);
+			$scope.receipt.closingAdvanceAmount = 0;
+		}
 		$scope.isSaveDisabled=false;
 	};
 	$scope.generateReceipt=function()
@@ -100,7 +109,8 @@ app.controller('installmentReceiptController', ['$scope','deliveryNoteService','
 			var receipt=response.data;
 			
 			$scope.receipt.invoices=receipt.invoices;
-			$scope.receipt.openingAdvanceAmount=receipt.openingAdvanceAmount + Number($scope.receipt.previousAdvanceBalance);
+			$scope.receipt.advanceAmount = receipt.openingAdvanceAmount + $scope.receipt.previousAdvanceBalance;
+			$scope.receipt.openingAdvanceAmount=$scope.receipt.advanceAmount;
 			if($scope.receipt.invoices.length==0)
 			{
 				$window.alert('No Record Found!');
@@ -114,13 +124,14 @@ app.controller('installmentReceiptController', ['$scope','deliveryNoteService','
 				}
 				$scope.receipt.openingBalance+=value.previousBalance;
 			});
-			
+			$scope.receipt.amountToBePaid = $scope.receipt.openingBalance - $scope.receipt.advanceAmount + $scope.receipt.previousOpeningBalance; 	
+			$scope.receipt.closingAdvanceAmount = 0;
+				if($scope.receipt.amountToBePaid < 0){
+					$scope.receipt.amountToBePaid = Math.abs($scope.receipt.amountToBePaid);
+					$scope.receipt.closingAdvanceAmount += $scope.receipt.amountToBePaid;
+					$scope.receipt.amountToBePaid = 0;
+				}
 		});
-		if(($scope.receipt.openingBalance - $scope.receipt.openingAdvanceAmount) < 0){
-			$scope.receipt.amountToBePaid = 0;
-		}else{
-			$scope.receipt.amountToBePaid = $scope.receipt.openingBalance - $scope.receipt.openingAdvanceAmount;
-		}
 	};
 
 	$scope.updateOpeningBalance=function(customerID)

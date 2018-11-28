@@ -268,9 +268,13 @@
 					<div class="col-md-10 text-right"><label>Old due :</label></div>
 					<div class="col-md-1 text-left"><label>{{(invoice.openingBalance).replace('-', '') | number: 2}}</label></div>
 				</div>
-				<div x-ng-hide="simple" class="row">
+				<div x-ng-hide="simple" class="row" ng-if="invoice.closingBalance>0">
 					<div class="col-md-10 text-right"><label>Closing Balance :</label></div>
 					<div class="col-md-1 text-left"><label>{{invoice.closingBalance | number: 2}}</label></div>
+				</div>
+				<div x-ng-hide="simple" class="row" ng-if="invoice.closingBalance < 0">
+					<div class="col-md-10 text-right"><label>Closing Advance Amount :</label></div>
+					<div class="col-md-1 text-left"><label>{{invoice.closingAdvanceAmount | number: 2}}</label></div>
 				</div>
                 <div class="row" style="margin-bottom: 30px">
                   <div class="col col-xs-6 text-right">

@@ -185,6 +185,9 @@ app.controller('invoiceController', ['$scope','$http','deliveryNoteService','$wi
 				$scope.invoice.gstAmount = $scope.invoice.cgstAmount + $scope.invoice.sgstAmount;
 				$scope.invoice.netAmount=$scope.invoice.gstAmount + $scope.invoice.grossAmount;
 				$scope.invoice.closingBalance = $scope.invoice.netAmount - Number($scope.invoice.openingBalance);
+				if($scope.invoice.closingBalance < 0){
+					$scope.invoice.closingAdvanceAmount = Math.abs($scope.invoice.closingBalance);
+				}
 			}
 			
 		});
