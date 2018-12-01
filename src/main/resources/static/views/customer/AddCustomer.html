@@ -62,26 +62,30 @@
                             </div>
                         </div>
 
-                        <div class="form-group required" style="margin-right: 30px">
-                            <label for="id_opening_balance" class="control-label col-md-4  requiredField">Balance<span class="asteriskField">*</span> </label>
+                        <div class="form-group" style="margin-right: 30px">
+                            <label for="id_opening_balance" class="control-label col-md-4  requiredField">Advance Amount?</label>
                             <div class="controls col-md-8 ">
-                               <input class="input-md textinput textInput form-control" x-ng-model="customer.openingBalance" name="openingBalance" placeholder=" Enter Customer's Opening Balance" style="margin-bottom: 10px" type="number" required/>
-                           </div>
-                       </div>
-
-                        <div class="form-group required">
-                            <!-- <label for="id_current_balance" class="control-label col-md-4  requiredField">Balance Type<span class="asteriskField">*</span> </label> -->
-                            <!-- <div class="controls custom-control custom-radio "> -->
-                                <label class="radio-inline">
-                                    <input class="custom-control-input" x-ng-model="customer.balanceType" name="balanceType" value="ob" type="radio" required >Opening Balance
-                                </label>
-                            <!-- </div> -->
-                            <!-- <div class="controls custom-control custom-radio "> -->
-                                    <label class="radio-inline">
-                                        <input class="custom-control-input" x-ng-model="customer.balanceType" name="balanceType" value="cb" type="radio" required >Opening Balance
-                                    </label>
-                                <!-- </div> -->
+                                <input type="checkbox" x-ng-model="customer.balanceType" name="balanceType" style="margin-bottom: 10px" />
+                            </div>
                         </div>
+
+                    <div ng-show="!customer.balanceType">
+                        <div class="form-group required" style="margin-right: 30px">
+                            <label for="id_opening_balance" class="control-label col-md-4  requiredField">Opening Balance<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 ">
+                                <input class="input-md textinput textInput form-control" x-ng-model="customer.openingBalance" name="openingBalance" placeholder=" Enter Customer's Opening Balance" style="margin-bottom: 10px" type="number" required/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="customer.balanceType">
+                       <div class="form-group required" style="margin-right: 30px">
+                            <label for="id_opening_balance" class="control-label col-md-4  requiredField">Opening Advance Amount<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 ">
+                                <input class="input-md textinput textInput form-control" x-ng-model="customer.openingBalance" name="openingBalance" placeholder=" Enter Customer's Opening Balance" style="margin-bottom: 10px" type="number" required/>
+                            </div>
+                        </div>
+                    </div>
                         
                         <div class="form-group" style="margin-right: 30px"> <!-- State Button -->
                             <label for="state_id" class="control-label col-md-4">State<span class="asteriskField">*</span></label>

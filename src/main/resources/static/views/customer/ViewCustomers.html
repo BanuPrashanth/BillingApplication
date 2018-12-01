@@ -33,7 +33,8 @@
                           <td title="'GSTIN'" class="text-center" data-filter="{ gst : 'number'}" data-sortable="'gst'">{{customer.gst}}</td>
                           <td title="'PAN Number'" class="text-center" data-filter="{ panNumber : 'text'}" data-sortable="'panNumber'">{{customer.panNumber}}</td>
 						  <td title="'Customer Spoc.'" class="text-center" data-filter="{ customerSPOC : 'text'}" data-sortable="'customerSPOC'">{{customer.customerSPOC}}</td>
-						  <td title="'Current Balance'" class="text-center" data-filter="{ openingBalance : 'number'}" data-sortable="'openingBalance'">{{customer.openingBalance | number : 2}}</td>
+						  <td title="'Current Balance'" class="text-center" data-filter="{ openingBalance : 'number'}" data-sortable="'openingBalance'" ng-if="customer.openingBalance>=0">Advance Amount</td>
+						  <td title="'Current Balance'" class="text-center" data-filter="{ openingBalance : 'number'}" data-sortable="'openingBalance'" ng-if="customer.openingBalance<0">Opening Balance</td>
                           <td title="'State'" class="text-center" data-filter="{ state : 'text'}" data-sortable="'state'">{{customer.state}}</td>
                           <td title="'Start Date'" class="text-center" data-filter="{ startDate : 'text'}" data-sortable="'startDate'">{{customer.startDate | date : 'dd-MM-yyyy'}}</td>
                           <td title="'Edit'">

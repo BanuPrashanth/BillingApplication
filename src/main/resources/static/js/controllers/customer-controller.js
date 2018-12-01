@@ -62,6 +62,9 @@ app.controller('customerController', ['$scope','stateService','customerService',
 	
 	$scope.addCustomer=function(customer)
 	{
+		if(!customer.balanceType){
+			customer.openingBalance=-customer.openingBalance;
+		}
 		customerService.save(customer,function()
 		{
 			customerInit();
