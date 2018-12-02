@@ -47,6 +47,8 @@ public class ReceiptService extends CommonService{
 				receipt.getReceiptID(),
 				receipt.getCustomerID(),
 				receipt.getOpeningBalance(),
+				receipt.getPreviousOpeningBalance(),
+				receipt.getPreviousAdvanceBalance(),
 				receipt.getTotalAmtPaid(),
 				receipt.getClosingBalance(),
 				receipt.getTransactionType(),

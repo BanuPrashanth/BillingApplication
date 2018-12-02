@@ -12,6 +12,10 @@ public class Receipt {
 	private String customerID;
 	
 	private float openingBalance;
+
+	private float previousOpeningBalance;
+
+	private float previousAdvanceBalance;
 	
 	private String transactionType;
 	
@@ -66,6 +70,22 @@ public class Receipt {
 
 	public void setOpeningBalance(float openingBalance) {
 		this.openingBalance = openingBalance;
+	}
+
+	public float getPreviousOpeningBalance() {
+		return previousOpeningBalance;
+	}
+
+	public void setPreviousOpeningBalance(float previousOpeningBalance) {
+		this.previousOpeningBalance = previousOpeningBalance;
+	}
+
+	public float getPreviousAdvanceBalance() {
+		return previousAdvanceBalance;
+	}
+
+	public void setPreviousAdvanceBalance(float previousAdvanceBalance) {
+		this.previousAdvanceBalance = previousAdvanceBalance;
 	}
 
 	public String getTransactionType() {
@@ -142,7 +162,7 @@ public class Receipt {
 	@Override
 	public String toString() {
 		return "Receipt [objid=" + objid + ", receiptID=" + receiptID + ", customerID=" + customerID
-				+ ", openingBalance=" + openingBalance + ", transactionType=" + transactionType + ", comment=" + comment
+				+ ", openingBalance=" + openingBalance + ", previousOpeningBal= " + previousOpeningBalance + ", openingAdvanceAmt= " + previousAdvanceBalance + ", transactionType=" + transactionType + ", comment=" + comment
 				+ ", closingBalance=" + closingBalance + ", totalAmtPaid="
 				+ totalAmtPaid + ", fromDate=" + fromDate + ", toDate=" + toDate + ", receiptDate=" + receiptDate + "]";
 	}
