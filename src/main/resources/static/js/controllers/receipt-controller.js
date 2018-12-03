@@ -80,6 +80,9 @@ app.controller('installmentReceiptController', ['$scope','deliveryNoteService','
 		if(totalAmtPaid<0){
 			totalAmtPaid = 0;
 		}
+		if(($scope.receipt.previousOpeningBalance - $scope.amountPaid)>0){
+			$scope.receipt.closingBalance = $scope.receipt.previousOpeningBalance - $scope.amountPaid;
+		}
 		angular.forEach($scope.receipt.invoices,function(invoice,key){
 			if(invoice.previousBalance<totalAmtPaid)
 			{
